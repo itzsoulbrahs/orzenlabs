@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orzen Gold EA | Orzen Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.className+=' js'</script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,Helvetica,sans-serif}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 420px 760px at 2% 25%,rgba(70,70,70,.82) 0 38%,transparent 39%),
+    radial-gradient(ellipse 520px 900px at 102% 72%,rgba(52,52,52,.72) 0 38%,transparent 39%),
+    radial-gradient(ellipse 300px 500px at 20% 100%,rgba(35,35,35,.8) 0 42%,transparent 43%),
+    linear-gradient(135deg,#202020 0%,#080808 55%,#1c1c1c 100%);
+  color:#111;
+  padding:42px 16px;
+}
+.page{
+  width:min(560px,100%);
+  margin:0 auto;
+  background:#fff;
+  border-radius:32px;
+  padding:40px 32px 42px;
+  box-shadow:0 24px 80px rgba(0,0,0,.42);
+  min-height:calc(100vh - 84px);
+}
+.banner{
+  width:100%;
+  height:250px;
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;
+  background:
+    radial-gradient(circle at 28% 20%,#8b8b8b 0 7%,transparent 7.5%),
+    radial-gradient(ellipse at 72% 24%,#777 0 19%,transparent 20%),
+    radial-gradient(ellipse at 32% 70%,#5c5c5c 0 23%,transparent 24%),
+    radial-gradient(ellipse at 84% 74%,#777 0 20%,transparent 21%),
+    linear-gradient(145deg,#171717,#595959 48%,#171717);
+}
+.banner:before,.banner:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  background:rgba(220,220,220,.12);
+  filter:blur(1px);
+}
+.banner:before{width:230px;height:230px;left:90px;top:-120px}
+.banner:after{width:330px;height:330px;right:-110px;bottom:-190px}
+.banner .stars{
+  position:absolute;inset:0;
+  background-image:radial-gradient(#eee 0 1px,transparent 1.5px);
+  background-size:43px 43px;
+  opacity:.14;
+}
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top:-63px;
+  position:relative;
+  z-index:2;
+}
+.logo{
+  width:126px;height:126px;
+  border-radius:50%;
+  background:#050505;
+  border:7px solid #fff;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-weight:900;
+  font-size:25px;
+  letter-spacing:-2px;
+  box-shadow:0 4px 16px rgba(0,0,0,.22);
+}
+.brand{
+  text-align:center;
+  font-size:18px;
+  letter-spacing:3px;
+  margin:13px 0 15px;
+}
+.socials{display:flex;justify-content:center;gap:18px;margin-bottom:32px}
+.socials a{
+  width:30px;height:30px;
+  display:grid;place-items:center;
+  color:#111;text-decoration:none;
+  font-size:22px;
+}
+.section-title{
+  width:max-content;
+  max-width:100%;
+  margin:0 auto 16px;
+  padding:13px 22px;
+  border:1px solid #111;
+  border-radius:15px;
+  background:#fff;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:1.4px;
+  text-align:center;
+}
+.product{
+  border:1px solid #222;
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 5px 15px rgba(0,0,0,.07);
+}
+.product-image{
+  width:100%;
+  height:310px;
+  object-fit:cover;
+  object-position:center 30%;
+  display:block;
+  background:#edf5f5;
+}
+.product-info{
+  padding:22px 25px 25px;
+}
+.product-name{
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.5px;
+  margin-bottom:10px;
+}
+.sold{
+  color:#222;
+  font-size:14px;
+  margin-bottom:15px;
+}
+.price{
+  font-size:27px;
+  margin-bottom:8px;
+}
+.old{
+  color:#999;
+  text-decoration:none;
+  font-size:17px;
+  margin-left:8px;
+}
+.offer{
+  color:#999;
+  font-size:14px;
+}
+.buy{
+  display:block;
+  width:100%;
+  margin-top:24px;
+  padding:15px 20px;
+  background:#292929;
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:1px;
+  transition:.18s ease;
+}
+.buy:hover{background:#111;transform:translateY(-1px)}
+@media(max-width:600px){
+  body{padding:0;background:#fff}
+  .page{border-radius:0;min-height:100vh;padding:24px 18px 34px;box-shadow:none}
+  .banner{height:220px}
+  .product-image{height:290px}
+}
+
+/* ===== Premium polish layer (appended; layout unchanged) ===== */
+:root{--ink:#0d0d0d;--ease:cubic-bezier(.22,1,.36,1)}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
+/* wider card */
+html{background:#080808}
+body{background-attachment:fixed}
+.page{position:relative;z-index:1}
+.js .page{opacity:0}
+.js.ready .page{opacity:1;transition:opacity .6s ease}
+.page{width:min(646px,100%);padding:37px 37px 39px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.banner{height:238px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.product-image{height:323px}
+.logo{border:0;font-size:32px;background:radial-gradient(circle at 30% 25%,#2a2a2a,#050505 70%);box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.logo:hover{transform:scale(1.04);box-shadow:0 12px 30px rgba(0,0,0,.38)}
+.brand{font-weight:700;letter-spacing:3px;font-size:17px}
+.socials a{width:40px;height:40px;border-radius:50%;border:1px solid #d9d9d9;font-size:18px;background:#fff;line-height:0}
+.socials a svg{width:18px;height:18px;display:block;fill:currentColor}
+.socials a{
+  transition:transform .4s var(--ease),background .3s ease,color .3s ease,border-color .3s ease,box-shadow .4s var(--ease)}
+.socials a:hover{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,.2)}
+.socials a:active{transform:scale(.95)}
+.section-title{font-weight:800;letter-spacing:2px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.product{border-color:#1a1a1a;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.08);isolation:isolate;
+  transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.product:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.16)}
+.product-image{transition:transform 1.4s var(--ease);transform-origin:center 30%}
+.product:hover .product-image{transform:scale(1.03)}
+.product-info{background:#fff;position:relative}
+.product-name{font-weight:800;letter-spacing:.8px}
+.sold{font-weight:600}
+.price{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.old{font-weight:500}
+.offer{display:inline-block;color:#444;background:#f1f1f1;padding:5px 12px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:.6px}
+.buy{cursor:pointer;background:linear-gradient(180deg,#333,#0f0f0f);box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 8px 18px rgba(0,0,0,.22);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .3s ease}
+.buy:hover{background:linear-gradient(180deg,#3b3b3b,#050505);transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 14px 26px rgba(0,0,0,.3)}
+.buy:active{transform:scale(.99);box-shadow:0 4px 10px rgba(0,0,0,.25)}
+a:focus-visible{outline:2px solid #111;outline-offset:3px}
+@media(max-width:600px){html{background:#fff}.page{padding:24px 18px 34px}.banner{height:220px}.product-image{height:290px}}
+@media(hover:none){.product:hover{transform:none}.product:hover .product-image{transform:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition-duration:.01ms!important}}
+
+/* ===== Typography refinement ===== */
+body{font-family:'Manrope',Arial,Helvetica,sans-serif;color:#111;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.brand{font-size:15px;font-weight:500;letter-spacing:4px;line-height:1.2}
+.section-title{font-size:14px;font-weight:600;letter-spacing:1.7px;line-height:1.25;padding:12px 20px}
+.product-name{font-size:16px;font-weight:600;letter-spacing:.35px;line-height:1.35}
+.sold{font-size:13px;font-weight:400;letter-spacing:.15px;line-height:1.4;color:#333}
+.price{font-size:25px;font-weight:500;letter-spacing:-.35px;line-height:1.2}
+.old{font-size:15px;font-weight:400;letter-spacing:0;margin-left:7px}
+.offer{font-size:12px;font-weight:500;letter-spacing:.45px}
+.buy{font-size:13px;font-weight:600;letter-spacing:.9px;line-height:1.2}
+.logo{font-weight:700}
+@media(max-width:600px){
+  .brand{font-size:14px;letter-spacing:3.5px}
+  .section-title{font-size:13px;letter-spacing:1.45px}
+  .product-name{font-size:15px}
+  .sold{font-size:12px}
+  .price{font-size:24px}
+  .old{font-size:14px}
+  .buy{font-size:12.5px}
+}
+</style>
+
+<style>
+html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
+.brand{font-size:15px;font-weight:400;letter-spacing:1.8px;line-height:1.2}
+.section-title{font-size:15px;font-weight:600;letter-spacing:1.1px;line-height:1.25}
+.product-name{font-size:16px;font-weight:700;letter-spacing:.2px;line-height:1.35}
+.sold{font-size:12px;font-weight:400;letter-spacing:.1px;line-height:1.35}
+.price{font-size:27px;font-weight:500;letter-spacing:-.35px;line-height:1.2}
+.old{font-size:17px;font-weight:400;letter-spacing:0}
+.offer{font-size:14px;font-weight:400;letter-spacing:.1px}
+.buy{font-size:14px;font-weight:700;letter-spacing:.8px}
+@media(max-width:600px){.brand{font-size:14px;letter-spacing:1.8px}.section-title{font-size:14px}.product-name{font-size:15.5px}.price{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <div class="stars"></div>
+  </div>
+
+  <div class="logo-wrap">
+    <img class="logo" src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1780658409/2dbd25087793ed77998b2d214d55dfd0_ibclaq.jpg" alt="Orzen Labs">
+  </div>
+
+  <div class="brand">ORZEN LABS</div>
+
+  <div class="socials">
+    <a href="mailto:orzenlabs.algo@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.6 2L12 12.4 19.4 7H4.6zM4 8.9V17h16V8.9l-8 5.8-8-5.8z"/></svg></a>
+    <a href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.78 15.6l-.4 4.2c.58 0 .83-.25 1.13-.55l2.7-2.58 5.6 4.1c1.03.57 1.76.27 2.04-.95l3.7-17.3c.33-1.52-.55-2.12-1.55-1.75L1.3 9.2c-1.48.58-1.46 1.4-.26 1.77l5.5 1.72L19.3 4.7c.6-.4 1.15-.18.7.22L9.78 15.6z" transform="translate(-1 0)"/></svg></a>
+  </div>
+
+  <div class="section-title">GET THE ORZEN GOLD EA</div>
+
+  <div class="product" onclick="window.location.href='product.html'" style="cursor:pointer;">
+    <img class="product-image" src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791463954/4bb3de95-fb44-4c20-a394-227a59933453_ghomer.png" alt="Orzen Gold EA">
+    <div class="product-info">
+      <div class="product-name">ORZEN GOLD EA</div>
+      <div class="sold">XAUUSD • AUTOMATED TRADING</div>
+      <div class="price">$49 <span class="old">/ Month</span></div>
+      <a class="buy" href="product.html">BUY NOW</a>
+    </div>
+  </div>
+
+</div>
+<script>(function(){var d=document.documentElement,done=0;function go(){if(done)return;done=1;requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('ready')})})}var img=document.querySelector('.product-image');Promise.all([document.fonts?document.fonts.ready:0,img&&img.decode?img.decode().catch(function(){}):0]).then(go);setTimeout(go,2500)})()</script>
+</body>
+</html>

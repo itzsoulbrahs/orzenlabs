@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orzen Gold EA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#050505;font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh}
+.header{height:82px;border-bottom:1px solid #d8d8d8;box-shadow:0 2px 4px rgba(0,0,0,.12);display:flex;align-items:center}
+.header-inner{width:min(1380px,92%);margin:auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:14px;font-size:20px;font-weight:700}
+.back{width:38px;height:38px;border-radius:9px;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;line-height:1;font-weight:300}
+.telegram{background:#0b9fc3;color:#fff;text-decoration:none;padding:14px 30px;border-radius:9px;font-size:14px;font-weight:700}
+.page{width:min(1320px,92%);margin:28px auto 0;min-height:740px}
+.product{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.visual{display:flex;justify-content:center;padding-top:28px}
+.gallery{width:430px;max-width:100%;position:relative}
+.gallery-main{position:relative;background:#111;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.08);isolation:isolate}
+.gallery-main:before{content:"";position:absolute;inset:-34px;background-image:var(--gallery-bg);background-size:cover;background-position:center;filter:blur(24px);transform:scale(1.08);opacity:.92;z-index:0;transition:background-image .18s ease}
+.product-image{position:relative;z-index:1;width:100%;height:610px;object-fit:contain;object-position:center center;border-radius:16px;display:block;background:transparent;transition:opacity .18s ease}
+.gallery-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:28px;line-height:1;cursor:pointer;z-index:2;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.gallery-btn:hover{background:#000}
+.gallery-btn.prev{left:12px}.gallery-btn.next{right:12px}
+.gallery-counter{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);background:rgba(0,0,0,.7);color:#fff;padding:6px 11px;border-radius:999px;font-size:12px;z-index:2}
+.thumbs{display:flex;gap:10px;margin-top:12px;justify-content:center}
+.thumb{width:72px;height:82px;border:2px solid transparent;border-radius:9px;overflow:hidden;padding:0;background:#eee;cursor:pointer;opacity:.72}
+.thumb.active{border-color:#111;opacity:1}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.details{border-left:1px solid #777;padding:10px 0 0 30px;min-height:650px}
+h1{font-size:36px;margin:0 0 10px;font-weight:800}
+.price{font-size:28px;font-weight:700;margin:0 0 2px}
+.old{font-size:17px;color:#aaa;margin-bottom:18px}
+.buy{width:100%;border:0;background:#000;color:#fff;padding:15px;border-radius:7px;font-size:16px;cursor:pointer;margin-bottom:18px}
+.buy:hover{opacity:.88}
+.copy{font-size:16px;line-height:1.55;max-width:620px}
+.copy p{margin:0 0 22px}
+.copy strong{font-weight:800}
+.copy ul{list-style:none;padding:0;margin:0 0 26px}
+.copy li{margin:7px 0}
+.note{font-style:italic}
+.small{font-size:11px}
+.telegram-link{color:#168de2;text-decoration:underline}
+.footer{border-top:1px solid #ddd;text-align:center;padding:22px 10px 18px;font-size:14px;margin-top:12px}
+.footer-links{font-size:11px;color:#555;margin-top:8px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.76);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal-overlay.open{display:flex}
+.modal{width:430px;max-width:100%;background:#fff;border-radius:16px;padding:42px 58px 34px;text-align:center;box-shadow:0 18px 60px rgba(0,0,0,.35)}
+.checkout{font-size:22px;text-decoration:underline;margin-bottom:28px}
+.logo{width:56px;height:56px;border-radius:6px;object-fit:cover;margin-bottom:10px}
+.modal-product{font-size:18px;margin-bottom:8px}
+.discount{font-size:14px;margin-bottom:24px}
+.summary{border:1px solid #222;border-radius:8px;overflow:hidden;text-align:left;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid #222;font-size:16px}
+.row:last-child{border-bottom:0;font-weight:800;font-size:19px}
+.methods{font-size:14px;margin:8px 0 10px}
+.pay{width:100%;border:0;border-radius:7px;height:48px;color:#fff;font-size:15px;font-weight:600;margin:5px 0;cursor:pointer;box-shadow:0 3px 7px rgba(0,0,0,.16)}
+.upi{background:#087fbe}
+.cards{background:#6f7ff0}
+.crypto{background:#111}
+.pay:hover{filter:brightness(.94)}
+@media(max-width:800px){
+ .header{height:72px}
+ .header-inner,.page{width:92%}
+ .brand{font-size:17px}
+ .telegram{padding:11px 17px;font-size:12px}
+ .product{grid-template-columns:1fr;gap:0}
+ .visual{padding-top:25px}
+ .gallery{width:min(430px,100%)}
+ .product-image{height:560px}
+ .details{border-left:0;border-top:1px solid #777;margin-top:24px;padding:25px 0 0;min-height:0}
+ h1{font-size:30px}
+ .page{min-height:0;margin-top:18px}
+ .footer{margin-top:35px}
+ .modal{padding:34px 28px 28px}
+}
+
+/* ===== Premium polish layer (appended; layout unchanged) ===== */
+:root{--gold:#c9a96a;--gold-2:#f1dfb4;--ink:#0a0a0a;--ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
+body{background:linear-gradient(180deg,#fff,#fafaf8 60%,#fff)}
+a,button{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.header{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid rgba(0,0,0,.07);box-shadow:0 6px 24px rgba(0,0,0,.05);animation:drop .7s var(--ease) both}
+@keyframes drop{from{opacity:0;transform:translateY(-100%)}}
+.brand{font-weight:800;letter-spacing:.2px}
+.back{background:linear-gradient(180deg,#2a2a2a,#000);text-decoration:none;box-shadow:0 6px 14px rgba(0,0,0,.25);transition:transform .35s var(--ease),box-shadow .35s}
+.back:hover{transform:translateX(-4px);box-shadow:0 10px 20px rgba(0,0,0,.3)}
+.back:active{transform:translateX(-2px) scale(.94)}
+.telegram{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(135deg,#17b3d8,#0a8fb3);font-weight:800;letter-spacing:.3px;
+  box-shadow:0 8px 18px rgba(11,159,195,.32);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.telegram:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(11,159,195,.42)}
+.telegram:active{transform:scale(.97)}
+/* single orchestrated entrance */
+.gallery{animation:rise .9s .15s var(--ease) both}
+.details>*{animation:rise .8s var(--ease) both}
+.details>:nth-child(1){animation-delay:.25s}.details>:nth-child(2){animation-delay:.32s}.details>:nth-child(3){animation-delay:.39s}.details>:nth-child(4){animation-delay:.46s}.details>:nth-child(5){animation-delay:.53s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.gallery-main{border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.05);transition:box-shadow .5s var(--ease),transform .5s var(--ease)}
+.gallery-main:hover{box-shadow:0 34px 70px rgba(0,0,0,.22),0 0 0 1px rgba(0,0,0,.06)}
+.product-image{border-radius:0;transition:opacity .35s ease,transform .9s var(--ease),object-position .7s var(--ease)}
+.gallery-main:before{transition:background-image .35s ease,opacity .35s ease}
+.gallery-main:hover .product-image{transform:scale(1.04)}
+.gallery-btn{background:rgba(10,10,10,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);opacity:.0;
+  transition:opacity .3s ease,transform .35s var(--ease),background .25s}
+.gallery-main:hover .gallery-btn,.gallery-btn:focus-visible{opacity:1}
+.gallery-btn:hover{background:#000;transform:translateY(-50%) scale(1.1)}
+.gallery-btn:active{transform:translateY(-50%) scale(.94)}
+@media(hover:none){.gallery-btn{opacity:1}}
+.gallery-counter{background:rgba(10,10,10,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);font-weight:700;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+.thumb{border-radius:10px;transition:transform .35s var(--ease),opacity .3s,border-color .3s,box-shadow .35s}
+.thumb:hover{opacity:1;transform:translateY(-3px);box-shadow:0 10px 18px rgba(0,0,0,.18)}
+.thumb.active{border-color:var(--ink);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--gold);transform:translateY(-2px)}
+.details{border-left:1px solid #d6d6d6}
+h1{font-weight:800;letter-spacing:-.5px}
+.price{font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.old{font-weight:600}
+.buy{position:relative;overflow:hidden;isolation:isolate;font-family:inherit;font-weight:800;letter-spacing:.8px;border-radius:10px;padding:17px;
+  background:linear-gradient(180deg,#303030,#050505);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 12px 26px rgba(0,0,0,.3);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),letter-spacing .35s var(--ease)}
+.buy:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.buy:hover{opacity:1;transform:translateY(-3px);letter-spacing:1.6px;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 20px 36px rgba(0,0,0,.36)}
+.buy:active{transform:translateY(0) scale(.985)}
+.copy{color:#1d1d1d}
+.copy strong{font-weight:800}
+.telegram-link{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;transition:background-size .4s var(--ease),color .25s;padding-bottom:2px}
+.telegram-link:hover{background-size:0 1px;background-position:100% 100%;color:#0b6fb5}
+.footer{background:#fafaf8;color:#222}
+.footer-links u{text-decoration:none;cursor:pointer;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .35s var(--ease),color .25s}
+.footer-links u:hover{background-size:100% 1px;color:#000}
+/* checkout modal: animates open */
+.modal-overlay{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(8,8,8,.7)}
+.modal-overlay.open{animation:fade .3s ease both}
+.modal-overlay.open .modal{animation:modalIn .55s var(--ease) both}
+.modal-overlay.closing{display:flex;animation:fade .22s ease reverse both}
+.modal-overlay.closing .modal{animation:modalIn .22s ease reverse both}
+@keyframes fade{from{opacity:0}}
+@keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(.95)}}
+.modal{border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.08);position:relative}
+.modal:before{content:"";position:absolute;left:24px;right:24px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.checkout{text-decoration:none;font-weight:800;letter-spacing:-.3px}
+.logo{box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.summary{border-color:#d9d9d9;border-radius:12px}
+.row{border-bottom-color:#e6e6e6}
+.pay{font-family:inherit;font-weight:700;height:50px;border-radius:10px;box-shadow:0 6px 14px rgba(0,0,0,.18);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .25s}
+.pay:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 12px 22px rgba(0,0,0,.26)}
+.pay:active{transform:scale(.98)}
+.upi,.cards,.crypto{background:#000;color:#fff}
+@media(max-width:800px){.header{position:sticky}.gallery-main:hover .product-image{transform:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+/* ===== Performance proof sections ===== */
+.performance-bridge{display:flex;align-items:center;gap:24px;margin:72px 0 66px;padding:0 18px;text-align:center}
+.performance-bridge-line{height:1px;flex:1;background:linear-gradient(90deg,transparent,#dce3e7)}
+.performance-bridge-line:last-child{background:linear-gradient(90deg,#dce3e7,transparent)}
+.performance-bridge-content{max-width:650px}
+.performance-bridge-kicker{font-size:11px;letter-spacing:2px;font-weight:800;color:#05aeb4;margin-bottom:10px}
+.performance-bridge-content p{margin:0;color:#65717c;font-size:14px;line-height:1.6}
+.performance-bridge-stats{display:flex;justify-content:center;gap:28px;margin-top:13px;color:#8a97a2;font-size:11px;letter-spacing:.2px}
+.performance-bridge-stats span{white-space:nowrap}
+.performance-bridge-stats strong{color:#08a982;font-size:13px;margin-right:4px}
+@media(max-width:700px){.performance-bridge{gap:12px;margin:54px 0 48px;padding:0}.performance-bridge-line{display:none}.performance-bridge-stats{gap:16px;flex-wrap:wrap}}
+
+.proof-section{width:min(1100px,92%);margin:105px auto 80px;color:#0b0b0b}
+.proof-chart-wrap{text-align:center}
+.proof-kicker{font-size:12px;line-height:1;letter-spacing:2.2px;font-weight:800;color:#05aeb4;margin-bottom:17px}
+.proof-kicker.left{text-align:left;margin:0}
+.proof-chart-wrap h2,.faq-section h2{font-size:38px;line-height:1.08;letter-spacing:-1.6px;margin:0;font-weight:800}
+.proof-subtitle,.faq-subtitle{font-size:16px;color:#414141;margin:13px 0 49px;line-height:1.5}
+.chart-card{height:365px;border:1px solid #e0e4e7;border-radius:14px;background:#fbfcfd;box-shadow:0 12px 35px rgba(18,30,40,.045);overflow:hidden;padding:10px 22px 0}
+.profit-chart{width:100%;height:100%;display:block;overflow:visible}
+.grid-lines line{stroke:#e5e8eb;stroke-width:1}
+.axis-labels text{font-family:Manrope,Arial,sans-serif;fill:#8b99a5;font-size:12px;font-weight:500}
+.axis-labels text:nth-child(n+7){fill:#aeb6bd;font-size:9px}
+.area{fill:url(#chartFill)}
+.line{fill:none;stroke:#08b784;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chart-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12px;color:#8493a0}
+.chart-meta strong{color:#009c73;font-size:12px;letter-spacing:.3px}
+.pnl-card{margin-top:54px;border:1px solid #e1e5e8;border-radius:22px;background:#fff;box-shadow:0 12px 35px rgba(18,30,40,.06);padding:28px 30px 22px;overflow:hidden}
+.pnl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.net-badge{border:1px solid #9fe2cf;background:#ecfbf6;color:#90a6ad;border-radius:999px;padding:8px 15px;font-size:12px;font-weight:700;letter-spacing:.4px}
+.pnl-card h3{font-size:16px;letter-spacing:1.1px;color:#65758a;margin:0 0 17px;text-transform:uppercase}
+.pnl-scroll{overflow-x:auto;padding-bottom:2px}
+.pnl-table{border-collapse:separate;border-spacing:5px 7px;min-width:1020px;width:100%;font-size:12px;font-weight:800}
+.pnl-table th{font-weight:800;color:#8999a9;padding:0 8px;white-space:nowrap;text-align:center;font-size:10px}
+.pnl-table thead th:first-child,.pnl-table tbody th{text-align:left;color:#536174;font-size:14px;padding-left:0}
+.pnl-table tbody th span{font-size:10px;color:#728196}
+.pnl-table td{height:42px;min-width:64px;text-align:center;border-radius:8px;color:#087e65;white-space:nowrap}
+.g1{background:#d5f2e8}.g2{background:#b7e8d8}.g3{background:#8bd9c1}.g4{background:#58c9a7}.g6{background:#10bd82;color:#006d55!important}.r1{background:#f7d7d8;color:#d52e32!important}.r2{background:#f6c8ca;color:#d52e32!important}.r3{background:#f4b9bc;color:#d52e32!important}.r4{background:#f2aeb2;color:#d52e32!important}.total{background:#d9f2ea;color:#087e65!important}.dd{background:#fde8e8;color:#e22f35!important}.ratio{background:#e4eefb;color:#2166d1!important}.empty{background:#f2f5f8}
+.pnl-legend{display:flex;gap:14px;align-items:center;margin-top:9px;color:#748398;font-size:11px}.pnl-legend span{white-space:nowrap}.green-dot,.red-dot{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-2px;margin-right:6px}.green-dot{background:#10bd82}.red-dot{background:#ef4b4f}.scroll-hint{margin-left:auto;color:#91a0af}
+.faq-section{margin-top:105px;max-width:900px;margin-left:auto;margin-right:auto;text-align:center}
+.faq-section h2{font-size:36px}.faq-subtitle{margin-bottom:34px}
+.faq-list{text-align:left;border-top:1px solid #dfe3e6}
+.faq-list details{border-bottom:1px solid #dfe3e6;padding:0}
+.faq-list summary{list-style:none;cursor:pointer;padding:22px 42px 22px 2px;font-size:16px;font-weight:800;position:relative}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary:after{content:'+';position:absolute;right:3px;top:15px;font-size:27px;font-weight:400;color:#7d8994;transition:transform .25s ease}
+.faq-list details[open] summary:after{content:'−'}
+.faq-list p{margin:-4px 38px 22px 2px;color:#586575;font-size:14px;line-height:1.65;max-width:780px}
+@media(max-width:800px){.proof-section{margin-top:75px}.proof-chart-wrap h2,.faq-section h2{font-size:30px}.proof-subtitle,.faq-subtitle{font-size:14px;margin-bottom:30px}.chart-card{height:280px;padding:10px 8px 0}.chart-meta{font-size:10px}.pnl-card{padding:22px 16px 18px;border-radius:18px}.pnl-head{align-items:flex-start;gap:10px}.net-badge{font-size:10px;padding:7px 10px}.pnl-table{min-width:1000px}.faq-section{margin-top:75px}.faq-list summary{font-size:15px;padding-right:35px}.faq-list p{font-size:13px}}
+
+.detailed-equity-card{height:auto;padding:18px 18px 8px;overflow:hidden}
+.detailed-equity{width:100%;height:auto;display:block}
+.detailed-equity .grid-lines line,.detailed-equity .grid-lines{stroke:#d9dee5;stroke-width:1}
+.detailed-equity .grid-lines line{stroke-dasharray:3 5}
+.detailed-line{fill:none;stroke:#0754d6;stroke-width:2.15;stroke-linejoin:miter;stroke-linecap:butt}
+.trade-dots circle{fill:#0754d6;opacity:.72}
+.detailed-equity .axis-labels text,.detailed-equity .chart-corner{font-size:12px;fill:#6f7d8c;font-family:Arial,sans-serif}
+.analytics-intro{text-align:center;margin:78px 0 28px}
+.analytics-intro h2{margin:8px 0 10px}
+.analytics-intro .proof-subtitle{max-width:820px;margin:0 auto}
+.analytics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:0 auto;max-width:1200px}
+.analytics-card{border:1px solid #e1e6ec;border-radius:18px;background:#fff;padding:18px 18px 13px;box-shadow:0 8px 30px rgba(24,39,75,.045)}
+.analytics-title{font-size:16px;font-weight:650;color:#202832;margin:0 0 6px}
+.analytics-svg{width:100%;height:auto;display:block}
+.analytics-svg .chart-grid{stroke:#d8dde4;stroke-width:1;stroke-dasharray:2 4}
+.analytics-svg .chart-axis{font-size:11px;fill:#73808e;font-family:Arial,sans-serif}
+.analytics-svg .bar{opacity:.9}
+.analytics-svg .bar-0{fill:#4f9fb7}
+.analytics-svg .bar-1{fill:#c56a4c}
+.mini-legend{display:flex;justify-content:flex-end;gap:14px;font-size:11px;color:#768392;margin-top:-5px}
+.legend-swatch{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.sw-0{background:#4f9fb7}.sw-1{background:#c56a4c}
+@media(max-width:850px){
+  .analytics-grid{grid-template-columns:1fr}
+  .analytics-card{padding:14px}
+  .detailed-equity-card{padding:10px}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="brand"><a class="back" href="home.html" aria-label="Back">‹</a><span>ORZEN GOLD EA</span></div>
+    <a class="telegram" href="https://t.me/" target="_blank" rel="noopener">Join Telegram</a>
+  </div>
+</header>
+
+<main class="page">
+  <section class="product">
+    <div class="visual">
+      <div class="gallery">
+        <div class="gallery-main">
+          <button class="gallery-btn prev" type="button" onclick="changeSlide(-1)" aria-label="Previous image">‹</button>
+          <img id="galleryImage" class="product-image" src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791465721/911f4463-95a9-4406-bbe4-ec827cc483e2_cxjcz7.png" alt="Orzen Gold EA" data-slide="0">
+          <button class="gallery-btn next" type="button" onclick="changeSlide(1)" aria-label="Next image">›</button>
+          <div class="gallery-counter" id="galleryCounter">1 / 3</div>
+        </div>
+        <div class="thumbs">
+          <button class="thumb active" type="button" onclick="setSlide(0)" aria-label="Image 1"><img src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791465721/911f4463-95a9-4406-bbe4-ec827cc483e2_cxjcz7.png" alt="Image 1"></button>
+          <button class="thumb" type="button" onclick="setSlide(1)" aria-label="Image 2"><img src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791468965/2539d5ac-80b8-4123-b239-718d8b8cbe2a_ajkii6.png" alt="Image 2"></button>
+          <button class="thumb" type="button" onclick="setSlide(2)" aria-label="Image 3"><img src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791467627/0bbfdb50-870b-4186-b455-be702b926116_hnlbz9.png" alt="Image 3"></button>
+        </div>
+      </div>
+    </div>
+    <div class="details">
+      <h1>ORZEN GOLD EA</h1>
+      <div class="price">$49 <span style="font-size:16px;font-weight:600;color:#777">/ Month</span></div>
+      <div class="old">Monthly subscription</div>
+      <button class="buy" onclick="openCheckout()">Buy now</button>
+
+      <div class="copy">
+        <p><strong>Orzen Gold EA:</strong> Automated XAUUSD trading built for the gold market on the M30 timeframe.</p>
+        <p> The tested configuration uses fixed TP/SL and compounding.</p>
+        <p><strong>Profit Factor: 1.54</strong><br>
+        <strong>Sharpe Ratio: 3.29</strong><br>
+        <strong>Max Equity Drawdown: 13.26%</strong><br>
+        <strong></strong></p>
+        <p><strong>Why Orzen Gold EA?</strong><br>
+        - Automated XAUUSD execution<br>
+        - M30 strategy configuration<br>
+        - Fixed TP/SL configuration<br>
+        - Compounding supported<br>
+        - Designed for systematic gold trading</p>
+        
+        <p><strong></strong><br>
+        <a class="telegram-link" href="https://t.me/" target="_blank" rel="noopener">↗ Join Telegram</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="proof-section">
+  <div class="proof-chart-wrap">
+    <div class="proof-kicker">BACKTEST PERFORMANCE</div>
+    <h2>Orzen Gold EA Equity Curve</h2>
+    <p class="proof-subtitle">Every closed trade from the supplied Strategy Tester report is plotted, preserving the actual step-by-step balance movement.</p>
+    <div class="chart-card detailed-equity-card">
+      <svg class="profit-chart detailed-equity" viewBox="0 0 1200 430" role="img" aria-label="Detailed Orzen Gold EA balance curve across 236 closed trades">
+        <g class="grid-lines"><line x1="72" y1="365.0" x2="1150" y2="365.0"/><text x="60" y="369.0" text-anchor="end">$6,000</text><line x1="72" y1="299.0" x2="1150" y2="299.0"/><text x="60" y="303.0" text-anchor="end">$18,000</text><line x1="72" y1="233.0" x2="1150" y2="233.0"/><text x="60" y="237.0" text-anchor="end">$30,000</text><line x1="72" y1="167.0" x2="1150" y2="167.0"/><text x="60" y="171.0" text-anchor="end">$42,000</text><line x1="72" y1="101.0" x2="1150" y2="101.0"/><text x="60" y="105.0" text-anchor="end">$54,000</text><line x1="72" y1="35.0" x2="1150" y2="35.0"/><text x="60" y="39.0" text-anchor="end">$66,000</text></g>
+        <polyline class="detailed-line" points="72.00,345.14 76.59,347.27 81.17,349.40 85.76,347.82 90.35,346.24 94.94,348.37 99.52,346.78 104.11,345.05 108.70,343.31 113.29,341.56 117.87,339.66 122.46,337.77 127.05,335.71 131.63,333.66 136.22,331.60 140.81,329.39 145.40,327.17 149.98,330.06 154.57,327.85 159.16,330.76 163.74,333.46 168.33,331.40 172.92,329.18 177.51,326.96 182.09,324.59 186.68,327.50 191.27,325.13 195.86,328.05 200.44,325.68 205.03,328.58 209.62,326.37 214.20,324.00 218.79,321.63 223.38,324.72 227.97,327.63 232.55,325.24 237.14,328.15 241.73,325.77 246.31,323.41 250.90,321.05 255.49,324.15 260.08,321.78 264.66,319.25 269.25,316.72 273.84,320.01 278.43,317.48 283.01,314.78 287.60,312.09 292.19,315.56 296.77,318.86 301.36,316.34 305.95,319.64 310.54,317.10 315.12,314.41 319.71,317.68 324.30,315.00 328.89,312.34 333.47,315.83 338.06,313.14 342.65,310.30 347.23,307.45 351.82,304.47 356.41,301.48 361.00,298.26 365.58,302.32 370.17,299.17 374.76,295.88 379.34,292.55 383.93,289.09 388.52,285.40 393.11,289.90 397.69,294.17 402.28,290.72 406.87,287.24 411.46,291.69 416.04,288.22 420.63,284.57 425.22,280.81 429.80,277.02 434.39,281.90 438.98,286.56 443.57,282.95 448.15,279.21 452.74,275.27 457.33,280.39 461.91,285.06 466.50,281.46 471.09,286.15 475.68,282.52 480.26,287.22 484.85,283.67 489.44,279.91 494.03,284.82 498.61,281.10 503.20,277.27 507.79,273.32 512.37,278.36 516.96,283.22 521.55,279.47 526.14,275.55 530.72,271.62 535.31,267.52 539.90,263.25 544.49,268.71 549.07,273.97 553.66,279.06 558.25,283.94 562.83,280.13 567.42,284.83 572.01,281.06 576.60,277.28 581.18,282.09 585.77,278.31 590.36,274.37 594.94,270.28 599.53,275.48 604.12,271.57 608.71,267.48 613.29,263.22 617.88,268.71 622.47,273.95 627.06,279.02 631.64,275.09 636.23,271.00 640.82,266.93 645.40,262.66 649.99,258.28 654.58,253.75 659.17,249.04 663.75,244.18 668.34,239.11 672.93,233.88 677.51,228.45 682.10,235.29 686.69,229.91 691.28,224.41 695.86,231.28 700.45,225.85 705.04,233.00 709.63,227.60 714.21,234.39 718.80,241.02 723.39,247.47 727.97,253.57 732.56,248.83 737.15,243.98 741.74,238.95 746.32,233.79 750.91,228.41 755.50,222.93 760.09,217.30 764.67,211.34 769.26,205.21 773.85,198.93 778.43,192.46 783.02,185.69 787.61,178.72 792.20,171.50 796.78,180.67 801.37,189.55 805.96,197.95 810.54,191.37 815.13,184.65 819.72,177.76 824.31,170.53 828.89,163.15 833.48,155.53 838.07,147.65 842.66,139.39 847.24,130.94 851.83,141.66 856.42,152.02 861.00,143.93 865.59,135.65 870.18,126.92 874.77,137.78 879.35,148.28 883.94,140.21 888.53,131.72 893.11,142.36 897.70,152.67 902.29,144.77 906.88,136.41 911.46,147.07 916.05,138.92 920.64,130.62 925.23,121.81 929.81,112.81 934.40,103.49 938.99,115.55 943.57,106.23 948.16,96.67 952.75,108.92 957.34,99.46 961.92,89.70 966.51,79.56 971.10,69.24 975.69,82.66 980.27,72.22 984.86,61.45 989.45,75.20 994.03,88.23 998.62,78.23 1003.21,67.79 1007.80,81.20 1012.38,70.89 1016.97,84.08 1021.56,73.82 1026.14,63.23 1030.73,52.21 1035.32,66.18 1039.91,79.58 1044.49,69.16 1049.08,82.44 1053.67,95.38 1058.26,85.43 1062.84,75.19 1067.43,64.72 1072.02,78.18 1076.60,67.83 1081.19,81.17 1085.78,70.73 1090.37,60.11 1094.95,73.73 1099.54,63.14 1104.13,76.78 1108.71,66.19 1113.30,55.22 1117.89,44.00 1122.48,32.29 1127.06,47.20 1131.65,61.35 1136.24,50.31 1140.83,64.34 1145.41,53.44 1150.00,41.99"/>
+        <g class="trade-dots">
+          <circle cx="72.00" cy="345.14" r="1.55"/><circle cx="76.59" cy="347.27" r="1.55"/><circle cx="81.17" cy="349.40" r="1.55"/><circle cx="85.76" cy="347.82" r="1.55"/><circle cx="90.35" cy="346.24" r="1.55"/><circle cx="94.94" cy="348.37" r="1.55"/><circle cx="99.52" cy="346.78" r="1.55"/><circle cx="104.11" cy="345.05" r="1.55"/><circle cx="108.70" cy="343.31" r="1.55"/><circle cx="113.29" cy="341.56" r="1.55"/><circle cx="117.87" cy="339.66" r="1.55"/><circle cx="122.46" cy="337.77" r="1.55"/><circle cx="127.05" cy="335.71" r="1.55"/><circle cx="131.63" cy="333.66" r="1.55"/><circle cx="136.22" cy="331.60" r="1.55"/><circle cx="140.81" cy="329.39" r="1.55"/><circle cx="145.40" cy="327.17" r="1.55"/><circle cx="149.98" cy="330.06" r="1.55"/><circle cx="154.57" cy="327.85" r="1.55"/><circle cx="159.16" cy="330.76" r="1.55"/><circle cx="163.74" cy="333.46" r="1.55"/><circle cx="168.33" cy="331.40" r="1.55"/><circle cx="172.92" cy="329.18" r="1.55"/><circle cx="177.51" cy="326.96" r="1.55"/><circle cx="182.09" cy="324.59" r="1.55"/><circle cx="186.68" cy="327.50" r="1.55"/><circle cx="191.27" cy="325.13" r="1.55"/><circle cx="195.86" cy="328.05" r="1.55"/><circle cx="200.44" cy="325.68" r="1.55"/><circle cx="205.03" cy="328.58" r="1.55"/><circle cx="209.62" cy="326.37" r="1.55"/><circle cx="214.20" cy="324.00" r="1.55"/><circle cx="218.79" cy="321.63" r="1.55"/><circle cx="223.38" cy="324.72" r="1.55"/><circle cx="227.97" cy="327.63" r="1.55"/><circle cx="232.55" cy="325.24" r="1.55"/><circle cx="237.14" cy="328.15" r="1.55"/><circle cx="241.73" cy="325.77" r="1.55"/><circle cx="246.31" cy="323.41" r="1.55"/><circle cx="250.90" cy="321.05" r="1.55"/><circle cx="255.49" cy="324.15" r="1.55"/><circle cx="260.08" cy="321.78" r="1.55"/><circle cx="264.66" cy="319.25" r="1.55"/><circle cx="269.25" cy="316.72" r="1.55"/><circle cx="273.84" cy="320.01" r="1.55"/><circle cx="278.43" cy="317.48" r="1.55"/><circle cx="283.01" cy="314.78" r="1.55"/><circle cx="287.60" cy="312.09" r="1.55"/><circle cx="292.19" cy="315.56" r="1.55"/><circle cx="296.77" cy="318.86" r="1.55"/><circle cx="301.36" cy="316.34" r="1.55"/><circle cx="305.95" cy="319.64" r="1.55"/><circle cx="310.54" cy="317.10" r="1.55"/><circle cx="315.12" cy="314.41" r="1.55"/><circle cx="319.71" cy="317.68" r="1.55"/><circle cx="324.30" cy="315.00" r="1.55"/><circle cx="328.89" cy="312.34" r="1.55"/><circle cx="333.47" cy="315.83" r="1.55"/><circle cx="338.06" cy="313.14" r="1.55"/><circle cx="342.65" cy="310.30" r="1.55"/><circle cx="347.23" cy="307.45" r="1.55"/><circle cx="351.82" cy="304.47" r="1.55"/><circle cx="356.41" cy="301.48" r="1.55"/><circle cx="361.00" cy="298.26" r="1.55"/><circle cx="365.58" cy="302.32" r="1.55"/><circle cx="370.17" cy="299.17" r="1.55"/><circle cx="374.76" cy="295.88" r="1.55"/><circle cx="379.34" cy="292.55" r="1.55"/><circle cx="383.93" cy="289.09" r="1.55"/><circle cx="388.52" cy="285.40" r="1.55"/><circle cx="393.11" cy="289.90" r="1.55"/><circle cx="397.69" cy="294.17" r="1.55"/><circle cx="402.28" cy="290.72" r="1.55"/><circle cx="406.87" cy="287.24" r="1.55"/><circle cx="411.46" cy="291.69" r="1.55"/><circle cx="416.04" cy="288.22" r="1.55"/><circle cx="420.63" cy="284.57" r="1.55"/><circle cx="425.22" cy="280.81" r="1.55"/><circle cx="429.80" cy="277.02" r="1.55"/><circle cx="434.39" cy="281.90" r="1.55"/><circle cx="438.98" cy="286.56" r="1.55"/><circle cx="443.57" cy="282.95" r="1.55"/><circle cx="448.15" cy="279.21" r="1.55"/><circle cx="452.74" cy="275.27" r="1.55"/><circle cx="457.33" cy="280.39" r="1.55"/><circle cx="461.91" cy="285.06" r="1.55"/><circle cx="466.50" cy="281.46" r="1.55"/><circle cx="471.09" cy="286.15" r="1.55"/><circle cx="475.68" cy="282.52" r="1.55"/><circle cx="480.26" cy="287.22" r="1.55"/><circle cx="484.85" cy="283.67" r="1.55"/><circle cx="489.44" cy="279.91" r="1.55"/><circle cx="494.03" cy="284.82" r="1.55"/><circle cx="498.61" cy="281.10" r="1.55"/><circle cx="503.20" cy="277.27" r="1.55"/><circle cx="507.79" cy="273.32" r="1.55"/><circle cx="512.37" cy="278.36" r="1.55"/><circle cx="516.96" cy="283.22" r="1.55"/><circle cx="521.55" cy="279.47" r="1.55"/><circle cx="526.14" cy="275.55" r="1.55"/><circle cx="530.72" cy="271.62" r="1.55"/><circle cx="535.31" cy="267.52" r="1.55"/><circle cx="539.90" cy="263.25" r="1.55"/><circle cx="544.49" cy="268.71" r="1.55"/><circle cx="549.07" cy="273.97" r="1.55"/><circle cx="553.66" cy="279.06" r="1.55"/><circle cx="558.25" cy="283.94" r="1.55"/><circle cx="562.83" cy="280.13" r="1.55"/><circle cx="567.42" cy="284.83" r="1.55"/><circle cx="572.01" cy="281.06" r="1.55"/><circle cx="576.60" cy="277.28" r="1.55"/><circle cx="581.18" cy="282.09" r="1.55"/><circle cx="585.77" cy="278.31" r="1.55"/><circle cx="590.36" cy="274.37" r="1.55"/><circle cx="594.94" cy="270.28" r="1.55"/><circle cx="599.53" cy="275.48" r="1.55"/><circle cx="604.12" cy="271.57" r="1.55"/><circle cx="608.71" cy="267.48" r="1.55"/><circle cx="613.29" cy="263.22" r="1.55"/><circle cx="617.88" cy="268.71" r="1.55"/><circle cx="622.47" cy="273.95" r="1.55"/><circle cx="627.06" cy="279.02" r="1.55"/><circle cx="631.64" cy="275.09" r="1.55"/><circle cx="636.23" cy="271.00" r="1.55"/><circle cx="640.82" cy="266.93" r="1.55"/><circle cx="645.40" cy="262.66" r="1.55"/><circle cx="649.99" cy="258.28" r="1.55"/><circle cx="654.58" cy="253.75" r="1.55"/><circle cx="659.17" cy="249.04" r="1.55"/><circle cx="663.75" cy="244.18" r="1.55"/><circle cx="668.34" cy="239.11" r="1.55"/><circle cx="672.93" cy="233.88" r="1.55"/><circle cx="677.51" cy="228.45" r="1.55"/><circle cx="682.10" cy="235.29" r="1.55"/><circle cx="686.69" cy="229.91" r="1.55"/><circle cx="691.28" cy="224.41" r="1.55"/><circle cx="695.86" cy="231.28" r="1.55"/><circle cx="700.45" cy="225.85" r="1.55"/><circle cx="705.04" cy="233.00" r="1.55"/><circle cx="709.63" cy="227.60" r="1.55"/><circle cx="714.21" cy="234.39" r="1.55"/><circle cx="718.80" cy="241.02" r="1.55"/><circle cx="723.39" cy="247.47" r="1.55"/><circle cx="727.97" cy="253.57" r="1.55"/><circle cx="732.56" cy="248.83" r="1.55"/><circle cx="737.15" cy="243.98" r="1.55"/><circle cx="741.74" cy="238.95" r="1.55"/><circle cx="746.32" cy="233.79" r="1.55"/><circle cx="750.91" cy="228.41" r="1.55"/><circle cx="755.50" cy="222.93" r="1.55"/><circle cx="760.09" cy="217.30" r="1.55"/><circle cx="764.67" cy="211.34" r="1.55"/><circle cx="769.26" cy="205.21" r="1.55"/><circle cx="773.85" cy="198.93" r="1.55"/><circle cx="778.43" cy="192.46" r="1.55"/><circle cx="783.02" cy="185.69" r="1.55"/><circle cx="787.61" cy="178.72" r="1.55"/><circle cx="792.20" cy="171.50" r="1.55"/><circle cx="796.78" cy="180.67" r="1.55"/><circle cx="801.37" cy="189.55" r="1.55"/><circle cx="805.96" cy="197.95" r="1.55"/><circle cx="810.54" cy="191.37" r="1.55"/><circle cx="815.13" cy="184.65" r="1.55"/><circle cx="819.72" cy="177.76" r="1.55"/><circle cx="824.31" cy="170.53" r="1.55"/><circle cx="828.89" cy="163.15" r="1.55"/><circle cx="833.48" cy="155.53" r="1.55"/><circle cx="838.07" cy="147.65" r="1.55"/><circle cx="842.66" cy="139.39" r="1.55"/><circle cx="847.24" cy="130.94" r="1.55"/><circle cx="851.83" cy="141.66" r="1.55"/><circle cx="856.42" cy="152.02" r="1.55"/><circle cx="861.00" cy="143.93" r="1.55"/><circle cx="865.59" cy="135.65" r="1.55"/><circle cx="870.18" cy="126.92" r="1.55"/><circle cx="874.77" cy="137.78" r="1.55"/><circle cx="879.35" cy="148.28" r="1.55"/><circle cx="883.94" cy="140.21" r="1.55"/><circle cx="888.53" cy="131.72" r="1.55"/><circle cx="893.11" cy="142.36" r="1.55"/><circle cx="897.70" cy="152.67" r="1.55"/><circle cx="902.29" cy="144.77" r="1.55"/><circle cx="906.88" cy="136.41" r="1.55"/><circle cx="911.46" cy="147.07" r="1.55"/><circle cx="916.05" cy="138.92" r="1.55"/><circle cx="920.64" cy="130.62" r="1.55"/><circle cx="925.23" cy="121.81" r="1.55"/><circle cx="929.81" cy="112.81" r="1.55"/><circle cx="934.40" cy="103.49" r="1.55"/><circle cx="938.99" cy="115.55" r="1.55"/><circle cx="943.57" cy="106.23" r="1.55"/><circle cx="948.16" cy="96.67" r="1.55"/><circle cx="952.75" cy="108.92" r="1.55"/><circle cx="957.34" cy="99.46" r="1.55"/><circle cx="961.92" cy="89.70" r="1.55"/><circle cx="966.51" cy="79.56" r="1.55"/><circle cx="971.10" cy="69.24" r="1.55"/><circle cx="975.69" cy="82.66" r="1.55"/><circle cx="980.27" cy="72.22" r="1.55"/><circle cx="984.86" cy="61.45" r="1.55"/><circle cx="989.45" cy="75.20" r="1.55"/><circle cx="994.03" cy="88.23" r="1.55"/><circle cx="998.62" cy="78.23" r="1.55"/><circle cx="1003.21" cy="67.79" r="1.55"/><circle cx="1007.80" cy="81.20" r="1.55"/><circle cx="1012.38" cy="70.89" r="1.55"/><circle cx="1016.97" cy="84.08" r="1.55"/><circle cx="1021.56" cy="73.82" r="1.55"/><circle cx="1026.14" cy="63.23" r="1.55"/><circle cx="1030.73" cy="52.21" r="1.55"/><circle cx="1035.32" cy="66.18" r="1.55"/><circle cx="1039.91" cy="79.58" r="1.55"/><circle cx="1044.49" cy="69.16" r="1.55"/><circle cx="1049.08" cy="82.44" r="1.55"/><circle cx="1053.67" cy="95.38" r="1.55"/><circle cx="1058.26" cy="85.43" r="1.55"/><circle cx="1062.84" cy="75.19" r="1.55"/><circle cx="1067.43" cy="64.72" r="1.55"/><circle cx="1072.02" cy="78.18" r="1.55"/><circle cx="1076.60" cy="67.83" r="1.55"/><circle cx="1081.19" cy="81.17" r="1.55"/><circle cx="1085.78" cy="70.73" r="1.55"/><circle cx="1090.37" cy="60.11" r="1.55"/><circle cx="1094.95" cy="73.73" r="1.55"/><circle cx="1099.54" cy="63.14" r="1.55"/><circle cx="1104.13" cy="76.78" r="1.55"/><circle cx="1108.71" cy="66.19" r="1.55"/><circle cx="1113.30" cy="55.22" r="1.55"/><circle cx="1117.89" cy="44.00" r="1.55"/><circle cx="1122.48" cy="32.29" r="1.55"/><circle cx="1127.06" cy="47.20" r="1.55"/><circle cx="1131.65" cy="61.35" r="1.55"/><circle cx="1136.24" cy="50.31" r="1.55"/><circle cx="1140.83" cy="64.34" r="1.55"/><circle cx="1145.41" cy="53.44" r="1.55"/><circle cx="1150.00" cy="41.99" r="1.55"/>
+        </g>
+        <g class="axis-labels"><text x="72.0" y="397" text-anchor="middle">0</text><text x="186.7" y="397" text-anchor="middle">25</text><text x="301.4" y="397" text-anchor="middle">50</text><text x="416.0" y="397" text-anchor="middle">75</text><text x="530.7" y="397" text-anchor="middle">100</text><text x="645.4" y="397" text-anchor="middle">125</text><text x="760.1" y="397" text-anchor="middle">150</text><text x="874.8" y="397" text-anchor="middle">175</text><text x="989.4" y="397" text-anchor="middle">200</text><text x="1104.1" y="397" text-anchor="middle">225</text><text x="1154.6" y="397" text-anchor="middle">236</text></g>
+        <text x="18" y="25" class="chart-corner">Balance</text>
+        <text x="611" y="425" text-anchor="middle" class="chart-corner">Closed trade number</text>
+      </svg>
+    </div>
+    <div class="chart-meta"><span>Initial balance: $10,000 · 236 closed trades</span><strong>Final balance: $64,728.56</strong></div>
+  </div>
+
+  <div class="analytics-intro">
+    <div class="proof-kicker">TRADE DISTRIBUTION</div>
+    <h2>Entries, Profits &amp; Losses</h2>
+    <p class="proof-subtitle">Manually rendered from the Strategy Tester deal data — no chart images are used. The six charts show where entries occurred and how realized profits and losses were distributed across hours, weekdays and months.</p>
+  </div>
+
+  <div class="analytics-grid">
+    <div class="analytics-card">
+      <div class="analytics-title">Entries by hours</div>
+      <svg class="analytics-svg" viewBox="0 0 560 320" role="img" aria-label="Entries by hours">
+        <line x1="55" y1="265.0" x2="542" y2="265.0" class="chart-grid"/><text x="46" y="269.0" text-anchor="end" class="chart-axis">0</text><line x1="55" y1="207.5" x2="542" y2="207.5" class="chart-grid"/><text x="46" y="211.5" text-anchor="end" class="chart-axis">10</text><line x1="55" y1="150.0" x2="542" y2="150.0" class="chart-grid"/><text x="46" y="154.0" text-anchor="end" class="chart-axis">19</text><line x1="55" y1="92.5" x2="542" y2="92.5" class="chart-grid"/><text x="46" y="96.5" text-anchor="end" class="chart-axis">29</text><line x1="55" y1="35.0" x2="542" y2="35.0" class="chart-grid"/><text x="46" y="39.0" text-anchor="end" class="chart-axis">38</text>
+        <rect x="57.00" y="265.00" width="16.29" height="0.00" rx="1.5" class="bar bar-0"><title>Entries: 0</title></rect><text x="65.1" y="293" text-anchor="middle" class="chart-axis">0</text><rect x="77.29" y="228.76" width="16.29" height="36.24" rx="1.5" class="bar bar-0"><title>Entries: 6</title></rect><text x="85.4" y="293" text-anchor="middle" class="chart-axis">1</text><rect x="97.58" y="210.64" width="16.29" height="54.36" rx="1.5" class="bar bar-0"><title>Entries: 9</title></rect><text x="105.7" y="293" text-anchor="middle" class="chart-axis">2</text><rect x="117.88" y="234.80" width="16.29" height="30.20" rx="1.5" class="bar bar-0"><title>Entries: 5</title></rect><text x="126.0" y="293" text-anchor="middle" class="chart-axis">3</text><rect x="138.17" y="198.56" width="16.29" height="66.44" rx="1.5" class="bar bar-0"><title>Entries: 11</title></rect><text x="146.3" y="293" text-anchor="middle" class="chart-axis">4</text><rect x="158.46" y="222.72" width="16.29" height="42.28" rx="1.5" class="bar bar-0"><title>Entries: 7</title></rect><text x="166.6" y="293" text-anchor="middle" class="chart-axis">5</text><rect x="178.75" y="222.72" width="16.29" height="42.28" rx="1.5" class="bar bar-0"><title>Entries: 7</title></rect><text x="186.9" y="293" text-anchor="middle" class="chart-axis">6</text><rect x="199.04" y="216.68" width="16.29" height="48.32" rx="1.5" class="bar bar-0"><title>Entries: 8</title></rect><text x="207.2" y="293" text-anchor="middle" class="chart-axis">7</text><rect x="219.33" y="228.76" width="16.29" height="36.24" rx="1.5" class="bar bar-0"><title>Entries: 6</title></rect><text x="227.5" y="293" text-anchor="middle" class="chart-axis">8</text><rect x="239.62" y="186.48" width="16.29" height="78.52" rx="1.5" class="bar bar-0"><title>Entries: 13</title></rect><text x="247.8" y="293" text-anchor="middle" class="chart-axis">9</text><rect x="259.92" y="210.64" width="16.29" height="54.36" rx="1.5" class="bar bar-0"><title>Entries: 9</title></rect><text x="268.1" y="293" text-anchor="middle" class="chart-axis">10</text><rect x="280.21" y="174.40" width="16.29" height="90.60" rx="1.5" class="bar bar-0"><title>Entries: 15</title></rect><text x="288.4" y="293" text-anchor="middle" class="chart-axis">11</text><rect x="300.50" y="240.84" width="16.29" height="24.16" rx="1.5" class="bar bar-0"><title>Entries: 4</title></rect><text x="308.6" y="293" text-anchor="middle" class="chart-axis">12</text><rect x="320.79" y="228.76" width="16.29" height="36.24" rx="1.5" class="bar bar-0"><title>Entries: 6</title></rect><text x="328.9" y="293" text-anchor="middle" class="chart-axis">13</text><rect x="341.08" y="186.48" width="16.29" height="78.52" rx="1.5" class="bar bar-0"><title>Entries: 13</title></rect><text x="349.2" y="293" text-anchor="middle" class="chart-axis">14</text><rect x="361.38" y="216.68" width="16.29" height="48.32" rx="1.5" class="bar bar-0"><title>Entries: 8</title></rect><text x="369.5" y="293" text-anchor="middle" class="chart-axis">15</text><rect x="381.67" y="71.72" width="16.29" height="193.28" rx="1.5" class="bar bar-0"><title>Entries: 32</title></rect><text x="389.8" y="293" text-anchor="middle" class="chart-axis">16</text><rect x="401.96" y="59.64" width="16.29" height="205.36" rx="1.5" class="bar bar-0"><title>Entries: 34</title></rect><text x="410.1" y="293" text-anchor="middle" class="chart-axis">17</text><rect x="422.25" y="186.48" width="16.29" height="78.52" rx="1.5" class="bar bar-0"><title>Entries: 13</title></rect><text x="430.4" y="293" text-anchor="middle" class="chart-axis">18</text><rect x="442.54" y="198.56" width="16.29" height="66.44" rx="1.5" class="bar bar-0"><title>Entries: 11</title></rect><text x="450.7" y="293" text-anchor="middle" class="chart-axis">19</text><rect x="462.83" y="246.88" width="16.29" height="18.12" rx="1.5" class="bar bar-0"><title>Entries: 3</title></rect><text x="471.0" y="293" text-anchor="middle" class="chart-axis">20</text><rect x="483.12" y="204.60" width="16.29" height="60.40" rx="1.5" class="bar bar-0"><title>Entries: 10</title></rect><text x="491.3" y="293" text-anchor="middle" class="chart-axis">21</text><rect x="503.42" y="234.80" width="16.29" height="30.20" rx="1.5" class="bar bar-0"><title>Entries: 5</title></rect><text x="511.6" y="293" text-anchor="middle" class="chart-axis">22</text><rect x="523.71" y="258.96" width="16.29" height="6.04" rx="1.5" class="bar bar-0"><title>Entries: 1</title></rect><text x="531.9" y="293" text-anchor="middle" class="chart-axis">23</text>
+      </svg>
+      
+    </div><div class="analytics-card">
+      <div class="analytics-title">Entries by weekdays</div>
+      <svg class="analytics-svg" viewBox="0 0 560 320" role="img" aria-label="Entries by weekdays">
+        <line x1="55" y1="265.0" x2="542" y2="265.0" class="chart-grid"/><text x="46" y="269.0" text-anchor="end" class="chart-axis">0</text><line x1="55" y1="207.5" x2="542" y2="207.5" class="chart-grid"/><text x="46" y="211.5" text-anchor="end" class="chart-axis">17</text><line x1="55" y1="150.0" x2="542" y2="150.0" class="chart-grid"/><text x="46" y="154.0" text-anchor="end" class="chart-axis">34</text><line x1="55" y1="92.5" x2="542" y2="92.5" class="chart-grid"/><text x="46" y="96.5" text-anchor="end" class="chart-axis">50</text><line x1="55" y1="35.0" x2="542" y2="35.0" class="chart-grid"/><text x="46" y="39.0" text-anchor="end" class="chart-axis">67</text>
+        <rect x="60.57" y="265.00" width="58.44" height="0.00" rx="1.5" class="bar bar-0"><title>Entries: 0</title></rect><text x="89.8" y="293" text-anchor="middle" class="chart-axis">Sun</text><rect x="130.14" y="117.83" width="58.44" height="147.17" rx="1.5" class="bar bar-0"><title>Entries: 43</title></rect><text x="159.4" y="293" text-anchor="middle" class="chart-axis">Mon</text><rect x="199.71" y="107.56" width="58.44" height="157.44" rx="1.5" class="bar bar-0"><title>Entries: 46</title></rect><text x="228.9" y="293" text-anchor="middle" class="chart-axis">Tue</text><rect x="269.28" y="117.83" width="58.44" height="147.17" rx="1.5" class="bar bar-0"><title>Entries: 43</title></rect><text x="298.5" y="293" text-anchor="middle" class="chart-axis">Wed</text><rect x="338.85" y="80.18" width="58.44" height="184.82" rx="1.5" class="bar bar-0"><title>Entries: 54</title></rect><text x="368.1" y="293" text-anchor="middle" class="chart-axis">Thu</text><rect x="408.42" y="93.87" width="58.44" height="171.13" rx="1.5" class="bar bar-0"><title>Entries: 50</title></rect><text x="437.6" y="293" text-anchor="middle" class="chart-axis">Fri</text><rect x="477.99" y="265.00" width="58.44" height="0.00" rx="1.5" class="bar bar-0"><title>Entries: 0</title></rect><text x="507.2" y="293" text-anchor="middle" class="chart-axis">Sat</text>
+      </svg>
+      
+    </div><div class="analytics-card">
+      <div class="analytics-title">Entries by months</div>
+      <svg class="analytics-svg" viewBox="0 0 560 320" role="img" aria-label="Entries by months">
+        <line x1="55" y1="265.0" x2="542" y2="265.0" class="chart-grid"/><text x="46" y="269.0" text-anchor="end" class="chart-axis">0</text><line x1="55" y1="207.5" x2="542" y2="207.5" class="chart-grid"/><text x="46" y="211.5" text-anchor="end" class="chart-axis">8</text><line x1="55" y1="150.0" x2="542" y2="150.0" class="chart-grid"/><text x="46" y="154.0" text-anchor="end" class="chart-axis">16</text><line x1="55" y1="92.5" x2="542" y2="92.5" class="chart-grid"/><text x="46" y="96.5" text-anchor="end" class="chart-axis">24</text><line x1="55" y1="35.0" x2="542" y2="35.0" class="chart-grid"/><text x="46" y="39.0" text-anchor="end" class="chart-axis">32</text>
+        <rect x="58.25" y="116.29" width="34.09" height="148.71" rx="1.5" class="bar bar-0"><title>Entries: 21</title></rect><text x="75.3" y="293" text-anchor="middle" class="chart-axis">Jan</text><rect x="98.83" y="123.37" width="34.09" height="141.63" rx="1.5" class="bar bar-0"><title>Entries: 20</title></rect><text x="115.9" y="293" text-anchor="middle" class="chart-axis">Feb</text><rect x="139.41" y="180.02" width="34.09" height="84.98" rx="1.5" class="bar bar-0"><title>Entries: 12</title></rect><text x="156.5" y="293" text-anchor="middle" class="chart-axis">Mar</text><rect x="180.00" y="59.64" width="34.09" height="205.36" rx="1.5" class="bar bar-0"><title>Entries: 29</title></rect><text x="197.0" y="293" text-anchor="middle" class="chart-axis">Apr</text><rect x="220.58" y="66.72" width="34.09" height="198.28" rx="1.5" class="bar bar-0"><title>Entries: 28</title></rect><text x="237.6" y="293" text-anchor="middle" class="chart-axis">May</text><rect x="261.16" y="87.97" width="34.09" height="177.03" rx="1.5" class="bar bar-0"><title>Entries: 25</title></rect><text x="278.2" y="293" text-anchor="middle" class="chart-axis">Jun</text><rect x="301.75" y="80.89" width="34.09" height="184.11" rx="1.5" class="bar bar-0"><title>Entries: 26</title></rect><text x="318.8" y="293" text-anchor="middle" class="chart-axis">Jul</text><rect x="342.33" y="116.29" width="34.09" height="148.71" rx="1.5" class="bar bar-0"><title>Entries: 21</title></rect><text x="359.4" y="293" text-anchor="middle" class="chart-axis">Aug</text><rect x="382.91" y="172.94" width="34.09" height="92.06" rx="1.5" class="bar bar-0"><title>Entries: 13</title></rect><text x="400.0" y="293" text-anchor="middle" class="chart-axis">Sep</text><rect x="423.50" y="158.78" width="34.09" height="106.22" rx="1.5" class="bar bar-0"><title>Entries: 15</title></rect><text x="440.5" y="293" text-anchor="middle" class="chart-axis">Oct</text><rect x="464.08" y="165.86" width="34.09" height="99.14" rx="1.5" class="bar bar-0"><title>Entries: 14</title></rect><text x="481.1" y="293" text-anchor="middle" class="chart-axis">Nov</text><rect x="504.66" y="180.02" width="34.09" height="84.98" rx="1.5" class="bar bar-0"><title>Entries: 12</title></rect><text x="521.7" y="293" text-anchor="middle" class="chart-axis">Dec</text>
+      </svg>
+      
+    </div><div class="analytics-card">
+      <div class="analytics-title">Profits and losses by hours</div>
+      <svg class="analytics-svg" viewBox="0 0 560 320" role="img" aria-label="Profits and losses by hours">
+        <line x1="55" y1="265.0" x2="542" y2="265.0" class="chart-grid"/><text x="46" y="269.0" text-anchor="end" class="chart-axis">$0</text><line x1="55" y1="207.5" x2="542" y2="207.5" class="chart-grid"/><text x="46" y="211.5" text-anchor="end" class="chart-axis">$5,600</text><line x1="55" y1="150.0" x2="542" y2="150.0" class="chart-grid"/><text x="46" y="154.0" text-anchor="end" class="chart-axis">$11,200</text><line x1="55" y1="92.5" x2="542" y2="92.5" class="chart-grid"/><text x="46" y="96.5" text-anchor="end" class="chart-axis">$16,800</text><line x1="55" y1="35.0" x2="542" y2="35.0" class="chart-grid"/><text x="46" y="39.0" text-anchor="end" class="chart-axis">$22,400</text>
+        <rect x="57.00" y="265.00" width="7.15" height="0.00" rx="1.5" class="bar bar-0"><title>Profit: $0</title></rect><rect x="66.15" y="265.00" width="7.15" height="0.00" rx="1.5" class="bar bar-1"><title>Loss: $0</title></rect><text x="65.1" y="293" text-anchor="middle" class="chart-axis">0</text><rect x="77.29" y="182.39" width="7.15" height="82.61" rx="1.5" class="bar bar-0"><title>Profit: $8,046</title></rect><rect x="86.44" y="243.40" width="7.15" height="21.60" rx="1.5" class="bar bar-1"><title>Loss: $2,103</title></rect><text x="85.4" y="293" text-anchor="middle" class="chart-axis">1</text><rect x="97.58" y="221.42" width="7.15" height="43.58" rx="1.5" class="bar bar-0"><title>Profit: $4,245</title></rect><rect x="106.73" y="222.88" width="7.15" height="42.12" rx="1.5" class="bar bar-1"><title>Loss: $4,102</title></rect><text x="105.7" y="293" text-anchor="middle" class="chart-axis">2</text><rect x="117.88" y="188.75" width="7.15" height="76.25" rx="1.5" class="bar bar-0"><title>Profit: $7,426</title></rect><rect x="127.02" y="189.15" width="7.15" height="75.85" rx="1.5" class="bar bar-1"><title>Loss: $7,387</title></rect><text x="126.0" y="293" text-anchor="middle" class="chart-axis">3</text><rect x="138.17" y="206.59" width="7.15" height="58.41" rx="1.5" class="bar bar-0"><title>Profit: $5,689</title></rect><rect x="147.31" y="191.87" width="7.15" height="73.13" rx="1.5" class="bar bar-1"><title>Loss: $7,122</title></rect><text x="146.3" y="293" text-anchor="middle" class="chart-axis">4</text><rect x="158.46" y="222.98" width="7.15" height="42.02" rx="1.5" class="bar bar-0"><title>Profit: $4,092</title></rect><rect x="167.60" y="253.61" width="7.15" height="11.39" rx="1.5" class="bar bar-1"><title>Loss: $1,109</title></rect><text x="166.6" y="293" text-anchor="middle" class="chart-axis">5</text><rect x="178.75" y="248.21" width="7.15" height="16.79" rx="1.5" class="bar bar-0"><title>Profit: $1,635</title></rect><rect x="187.90" y="230.20" width="7.15" height="34.80" rx="1.5" class="bar bar-1"><title>Loss: $3,390</title></rect><text x="186.9" y="293" text-anchor="middle" class="chart-axis">6</text><rect x="199.04" y="227.15" width="7.15" height="37.85" rx="1.5" class="bar bar-0"><title>Profit: $3,686</title></rect><rect x="208.19" y="265.00" width="7.15" height="0.00" rx="1.5" class="bar bar-1"><title>Loss: $0</title></rect><text x="207.2" y="293" text-anchor="middle" class="chart-axis">7</text><rect x="219.33" y="200.46" width="7.15" height="64.54" rx="1.5" class="bar bar-0"><title>Profit: $6,285</title></rect><rect x="228.48" y="238.93" width="7.15" height="26.07" rx="1.5" class="bar bar-1"><title>Loss: $2,539</title></rect><text x="227.5" y="293" text-anchor="middle" class="chart-axis">8</text><rect x="239.62" y="239.86" width="7.15" height="25.14" rx="1.5" class="bar bar-0"><title>Profit: $2,449</title></rect><rect x="248.77" y="215.03" width="7.15" height="49.97" rx="1.5" class="bar bar-1"><title>Loss: $4,866</title></rect><text x="247.8" y="293" text-anchor="middle" class="chart-axis">9</text><rect x="259.92" y="194.42" width="7.15" height="70.58" rx="1.5" class="bar bar-0"><title>Profit: $6,873</title></rect><rect x="269.06" y="265.00" width="7.15" height="0.00" rx="1.5" class="bar bar-1"><title>Loss: $0</title></rect><text x="268.1" y="293" text-anchor="middle" class="chart-axis">10</text><rect x="280.21" y="247.27" width="7.15" height="17.73" rx="1.5" class="bar bar-0"><title>Profit: $1,727</title></rect><rect x="289.35" y="223.56" width="7.15" height="41.44" rx="1.5" class="bar bar-1"><title>Loss: $4,036</title></rect><text x="288.4" y="293" text-anchor="middle" class="chart-axis">11</text><rect x="300.50" y="217.57" width="7.15" height="47.43" rx="1.5" class="bar bar-0"><title>Profit: $4,619</title></rect><rect x="309.65" y="255.29" width="7.15" height="9.71" rx="1.5" class="bar bar-1"><title>Loss: $946</title></rect><text x="308.6" y="293" text-anchor="middle" class="chart-axis">12</text><rect x="320.79" y="223.72" width="7.15" height="41.28" rx="1.5" class="bar bar-0"><title>Profit: $4,020</title></rect><rect x="329.94" y="216.73" width="7.15" height="48.27" rx="1.5" class="bar bar-1"><title>Loss: $4,701</title></rect><text x="328.9" y="293" text-anchor="middle" class="chart-axis">13</text><rect x="341.08" y="168.49" width="7.15" height="96.51" rx="1.5" class="bar bar-0"><title>Profit: $9,399</title></rect><rect x="350.23" y="250.18" width="7.15" height="14.82" rx="1.5" class="bar bar-1"><title>Loss: $1,443</title></rect><text x="349.2" y="293" text-anchor="middle" class="chart-axis">14</text><rect x="361.38" y="116.10" width="7.15" height="148.90" rx="1.5" class="bar bar-0"><title>Profit: $14,502</title></rect><rect x="370.52" y="171.81" width="7.15" height="93.19" rx="1.5" class="bar bar-1"><title>Loss: $9,076</title></rect><text x="369.5" y="293" text-anchor="middle" class="chart-axis">15</text><rect x="381.67" y="126.09" width="7.15" height="138.91" rx="1.5" class="bar bar-0"><title>Profit: $13,528</title></rect><rect x="390.81" y="167.29" width="7.15" height="97.71" rx="1.5" class="bar bar-1"><title>Loss: $9,516</title></rect><text x="389.8" y="293" text-anchor="middle" class="chart-axis">16</text><rect x="401.96" y="61.58" width="7.15" height="203.42" rx="1.5" class="bar bar-0"><title>Profit: $19,811</title></rect><rect x="411.10" y="158.50" width="7.15" height="106.50" rx="1.5" class="bar bar-1"><title>Loss: $10,373</title></rect><text x="410.1" y="293" text-anchor="middle" class="chart-axis">17</text><rect x="422.25" y="129.64" width="7.15" height="135.36" rx="1.5" class="bar bar-0"><title>Profit: $13,183</title></rect><rect x="431.40" y="185.80" width="7.15" height="79.20" rx="1.5" class="bar bar-1"><title>Loss: $7,713</title></rect><text x="430.4" y="293" text-anchor="middle" class="chart-axis">18</text><rect x="442.54" y="211.59" width="7.15" height="53.41" rx="1.5" class="bar bar-0"><title>Profit: $5,201</title></rect><rect x="451.69" y="215.14" width="7.15" height="49.86" rx="1.5" class="bar bar-1"><title>Loss: $4,856</title></rect><text x="450.7" y="293" text-anchor="middle" class="chart-axis">19</text><rect x="462.83" y="201.40" width="7.15" height="63.60" rx="1.5" class="bar bar-0"><title>Profit: $6,194</title></rect><rect x="471.98" y="240.67" width="7.15" height="24.33" rx="1.5" class="bar bar-1"><title>Loss: $2,369</title></rect><text x="471.0" y="293" text-anchor="middle" class="chart-axis">20</text><rect x="483.12" y="215.87" width="7.15" height="49.13" rx="1.5" class="bar bar-0"><title>Profit: $4,785</title></rect><rect x="492.27" y="213.93" width="7.15" height="51.07" rx="1.5" class="bar bar-1"><title>Loss: $4,974</title></rect><text x="491.3" y="293" text-anchor="middle" class="chart-axis">21</text><rect x="503.42" y="199.01" width="7.15" height="65.99" rx="1.5" class="bar bar-0"><title>Profit: $6,427</title></rect><rect x="512.56" y="198.36" width="7.15" height="66.64" rx="1.5" class="bar bar-1"><title>Loss: $6,490</title></rect><text x="511.6" y="293" text-anchor="middle" class="chart-axis">22</text><rect x="523.71" y="238.64" width="7.15" height="26.36" rx="1.5" class="bar bar-0"><title>Profit: $2,567</title></rect><rect x="532.85" y="238.81" width="7.15" height="26.19" rx="1.5" class="bar bar-1"><title>Loss: $2,550</title></rect><text x="531.9" y="293" text-anchor="middle" class="chart-axis">23</text>
+      </svg>
+      <div class="mini-legend"><span><i class="legend-swatch sw-0"></i>Profit</span><span><i class="legend-swatch sw-1"></i>Loss</span></div>
+    </div><div class="analytics-card">
+      <div class="analytics-title">Profits and losses by weekdays</div>
+      <svg class="analytics-svg" viewBox="0 0 560 320" role="img" aria-label="Profits and losses by weekdays">
+        <line x1="55" y1="265.0" x2="542" y2="265.0" class="chart-grid"/><text x="46" y="269.0" text-anchor="end" class="chart-axis">$0</text><line x1="55" y1="207.5" x2="542" y2="207.5" class="chart-grid"/><text x="46" y="211.5" text-anchor="end" class="chart-axis">$10,080</text><line x1="55" y1="150.0" x2="542" y2="150.0" class="chart-grid"/><text x="46" y="154.0" text-anchor="end" class="chart-axis">$20,160</text><line x1="55" y1="92.5" x2="542" y2="92.5" class="chart-grid"/><text x="46" y="96.5" text-anchor="end" class="chart-axis">$30,240</text><line x1="55" y1="35.0" x2="542" y2="35.0" class="chart-grid"/><text x="46" y="39.0" text-anchor="end" class="chart-axis">$40,320</text>
+        <rect x="60.57" y="265.00" width="26.44" height="0.00" rx="1.5" class="bar bar-0"><title>Profit: $0</title></rect><rect x="92.57" y="265.00" width="26.44" height="0.00" rx="1.5" class="bar bar-1"><title>Loss: $0</title></rect><text x="89.8" y="293" text-anchor="middle" class="chart-axis">Sun</text><rect x="130.14" y="105.43" width="26.44" height="159.57" rx="1.5" class="bar bar-0"><title>Profit: $27,974</title></rect><rect x="162.14" y="193.37" width="26.44" height="71.63" rx="1.5" class="bar bar-1"><title>Loss: $12,557</title></rect><text x="159.4" y="293" text-anchor="middle" class="chart-axis">Mon</text><rect x="199.71" y="101.72" width="26.44" height="163.28" rx="1.5" class="bar bar-0"><title>Profit: $28,624</title></rect><rect x="231.71" y="62.14" width="26.44" height="202.86" rx="1.5" class="bar bar-1"><title>Loss: $35,562</title></rect><text x="228.9" y="293" text-anchor="middle" class="chart-axis">Tue</text><rect x="269.28" y="80.91" width="26.44" height="184.09" rx="1.5" class="bar bar-0"><title>Profit: $32,273</title></rect><rect x="301.28" y="168.96" width="26.44" height="96.04" rx="1.5" class="bar bar-1"><title>Loss: $16,837</title></rect><text x="298.5" y="293" text-anchor="middle" class="chart-axis">Wed</text><rect x="338.85" y="62.96" width="26.44" height="202.04" rx="1.5" class="bar bar-0"><title>Profit: $35,419</title></rect><rect x="370.85" y="165.39" width="26.44" height="99.61" rx="1.5" class="bar bar-1"><title>Loss: $17,462</title></rect><text x="368.1" y="293" text-anchor="middle" class="chart-axis">Thu</text><rect x="408.42" y="81.89" width="26.44" height="183.11" rx="1.5" class="bar bar-0"><title>Profit: $32,100</title></rect><rect x="440.43" y="155.23" width="26.44" height="109.77" rx="1.5" class="bar bar-1"><title>Loss: $19,243</title></rect><text x="437.6" y="293" text-anchor="middle" class="chart-axis">Fri</text><rect x="477.99" y="265.00" width="26.44" height="0.00" rx="1.5" class="bar bar-0"><title>Profit: $0</title></rect><rect x="510.00" y="265.00" width="26.44" height="0.00" rx="1.5" class="bar bar-1"><title>Loss: $0</title></rect><text x="507.2" y="293" text-anchor="middle" class="chart-axis">Sat</text>
+      </svg>
+      <div class="mini-legend"><span><i class="legend-swatch sw-0"></i>Profit</span><span><i class="legend-swatch sw-1"></i>Loss</span></div>
+    </div><div class="analytics-card">
+      <div class="analytics-title">Profits and losses by months</div>
+      <svg class="analytics-svg" viewBox="0 0 560 320" role="img" aria-label="Profits and losses by months">
+        <line x1="55" y1="265.0" x2="542" y2="265.0" class="chart-grid"/><text x="46" y="269.0" text-anchor="end" class="chart-axis">$0</text><line x1="55" y1="207.5" x2="542" y2="207.5" class="chart-grid"/><text x="46" y="211.5" text-anchor="end" class="chart-axis">$6,160</text><line x1="55" y1="150.0" x2="542" y2="150.0" class="chart-grid"/><text x="46" y="154.0" text-anchor="end" class="chart-axis">$12,320</text><line x1="55" y1="92.5" x2="542" y2="92.5" class="chart-grid"/><text x="46" y="96.5" text-anchor="end" class="chart-axis">$18,480</text><line x1="55" y1="35.0" x2="542" y2="35.0" class="chart-grid"/><text x="46" y="39.0" text-anchor="end" class="chart-axis">$24,640</text>
+        <rect x="58.25" y="113.40" width="15.42" height="151.60" rx="1.5" class="bar bar-0"><title>Profit: $16,241</title></rect><rect x="76.92" y="232.98" width="15.42" height="32.02" rx="1.5" class="bar bar-1"><title>Loss: $3,430</title></rect><text x="75.3" y="293" text-anchor="middle" class="chart-axis">Jan</text><rect x="98.83" y="181.89" width="15.42" height="83.11" rx="1.5" class="bar bar-0"><title>Profit: $8,904</title></rect><rect x="117.50" y="166.90" width="15.42" height="98.10" rx="1.5" class="bar bar-1"><title>Loss: $10,509</title></rect><text x="115.9" y="293" text-anchor="middle" class="chart-axis">Feb</text><rect x="139.41" y="178.73" width="15.42" height="86.27" rx="1.5" class="bar bar-0"><title>Profit: $9,242</title></rect><rect x="158.08" y="229.43" width="15.42" height="35.57" rx="1.5" class="bar bar-1"><title>Loss: $3,811</title></rect><text x="156.5" y="293" text-anchor="middle" class="chart-axis">Mar</text><rect x="180.00" y="112.39" width="15.42" height="152.61" rx="1.5" class="bar bar-0"><title>Profit: $16,350</title></rect><rect x="198.66" y="171.23" width="15.42" height="93.77" rx="1.5" class="bar bar-1"><title>Loss: $10,045</title></rect><text x="197.0" y="293" text-anchor="middle" class="chart-axis">Apr</text><rect x="220.58" y="81.46" width="15.42" height="183.54" rx="1.5" class="bar bar-0"><title>Profit: $19,663</title></rect><rect x="239.25" y="137.92" width="15.42" height="127.08" rx="1.5" class="bar bar-1"><title>Loss: $13,614</title></rect><text x="237.6" y="293" text-anchor="middle" class="chart-axis">May</text><rect x="261.16" y="116.10" width="15.42" height="148.90" rx="1.5" class="bar bar-0"><title>Profit: $15,952</title></rect><rect x="279.83" y="83.92" width="15.42" height="181.08" rx="1.5" class="bar bar-1"><title>Loss: $19,399</title></rect><text x="278.2" y="293" text-anchor="middle" class="chart-axis">Jun</text><rect x="301.75" y="68.52" width="15.42" height="196.48" rx="1.5" class="bar bar-0"><title>Profit: $21,049</title></rect><rect x="320.42" y="138.08" width="15.42" height="126.92" rx="1.5" class="bar bar-1"><title>Loss: $13,597</title></rect><text x="318.8" y="293" text-anchor="middle" class="chart-axis">Jul</text><rect x="342.33" y="104.34" width="15.42" height="160.66" rx="1.5" class="bar bar-0"><title>Profit: $17,211</title></rect><rect x="361.00" y="160.13" width="15.42" height="104.87" rx="1.5" class="bar bar-1"><title>Loss: $11,234</title></rect><text x="359.4" y="293" text-anchor="middle" class="chart-axis">Aug</text><rect x="382.91" y="180.16" width="15.42" height="84.84" rx="1.5" class="bar bar-0"><title>Profit: $9,089</title></rect><rect x="401.58" y="259.74" width="15.42" height="5.26" rx="1.5" class="bar bar-1"><title>Loss: $564</title></rect><text x="400.0" y="293" text-anchor="middle" class="chart-axis">Sep</text><rect x="423.50" y="214.71" width="15.42" height="50.29" rx="1.5" class="bar bar-0"><title>Profit: $5,388</title></rect><rect x="442.17" y="174.04" width="15.42" height="90.96" rx="1.5" class="bar bar-1"><title>Loss: $9,745</title></rect><text x="440.5" y="293" text-anchor="middle" class="chart-axis">Oct</text><rect x="464.08" y="190.29" width="15.42" height="74.71" rx="1.5" class="bar bar-0"><title>Profit: $8,004</title></rect><rect x="482.75" y="248.24" width="15.42" height="16.76" rx="1.5" class="bar bar-1"><title>Loss: $1,796</title></rect><text x="481.1" y="293" text-anchor="middle" class="chart-axis">Nov</text><rect x="504.66" y="178.21" width="15.42" height="86.79" rx="1.5" class="bar bar-0"><title>Profit: $9,298</title></rect><rect x="523.33" y="228.44" width="15.42" height="36.56" rx="1.5" class="bar bar-1"><title>Loss: $3,916</title></rect><text x="521.7" y="293" text-anchor="middle" class="chart-axis">Dec</text>
+      </svg>
+      <div class="mini-legend"><span><i class="legend-swatch sw-0"></i>Profit</span><span><i class="legend-swatch sw-1"></i>Loss</span></div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <div class="proof-kicker">FAQ</div>
+    <h2>Frequently Asked Questions</h2>
+    <p class="faq-subtitle">Everything you need to know before getting started with Orzen Gold EA.</p>
+    <div class="faq-list">
+      <details open><summary>What time frame does Orzen Gold EA work on?</summary><p>The 30M time frame is recommended, but you can use other time frames as well. Results may vary depending on the time frame.</p></details>
+      <details><summary>How many years has Orzen Gold EA been tested?</summary><p>The strategy has been tested across approximately 6 years of historical market data, covering different market conditions.</p></details>
+      <details><summary>Do I need a VPS to run Orzen Gold EA?</summary><p>Yes. A VPS is required to keep MetaTrader running continuously and allow the EA to operate without interruption.</p></details>
+      <details><summary>Will I receive a setup guide?</summary><p>Yes. You will receive a full setup guide explaining how to install, configure, and run Orzen Gold EA.</p></details>
+      <details><summary>Do you provide support after purchase?</summary><p>Yes. Full support is provided for installation, configuration, and any issues you encounter while using the EA.</p></details>
+      <details><summary>Will I get access to a Telegram community?</summary><p>Yes. You will be added to our private Telegram community, where you can discuss the EA and interact with other members.</p></details>
+  </div>
+</section>
+
+<footer class="footer">
+  <strong>contact us: orzenlabs.algo@gmail.com</strong>
+  <div class="footer-links"><u>Terms &amp; Condition</u>&nbsp;&nbsp;&nbsp; <u>Privacy policy</u></div>
+</footer>
+
+<div class="modal-overlay" id="checkout" onclick="closeOutside(event)">
+  <div class="modal">
+    <div class="checkout">Checkout</div>
+    <img class="logo" src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1780658409/2dbd25087793ed77998b2d214d55dfd0_ibclaq.jpg" alt="Orzen Gold EA">
+    <div class="modal-product">Orzen Gold EA</div>
+    <div class="discount">$49 / Month</div>
+
+    <div class="summary">
+      <div class="row"><span>Subtotal</span><strong>$49</strong></div>
+      <div class="row"><span>Total</span><strong>$49</strong></div>
+    </div>
+
+    <div class="methods">Payment methods*</div>
+    <button class="pay upi" onclick="openUpiPayment()">UPI ↗</button>
+    <button class="pay cards" onclick="payment('Cards')">Cards ↗</button>
+    <button class="pay crypto" onclick="payment('Crypto')">Crypto ↗</button>
+  </div>
+</div>
+
+<script>
+
+const slides = [
+  {src:'https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791465721/911f4463-95a9-4406-bbe4-ec827cc483e2_cxjcz7.png',position:'center center'},
+  {src:'https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791468965/2539d5ac-80b8-4123-b239-718d8b8cbe2a_ajkii6.png',position:'center center'},
+  {src:'https://res.cloudinary.com/ddhmtzdhi/image/upload/v1791467627/0bbfdb50-870b-4186-b455-be702b926116_hnlbz9.png',position:'center center'}
+];
+let currentSlide = 0;
+function setGalleryBackground(){
+  document.querySelector('.gallery-main').style.setProperty('--gallery-bg', `url(\"${slides[currentSlide].src}\")`);
+}
+setGalleryBackground();
+function setSlide(index){
+  currentSlide=(index+slides.length)%slides.length;
+  const img=document.getElementById('galleryImage');
+  img.style.opacity='0.2';
+  setTimeout(()=>{img.src=slides[currentSlide].src;img.style.objectPosition=slides[currentSlide].position;setGalleryBackground();img.style.opacity='1';},160);
+  document.getElementById('galleryCounter').textContent=(currentSlide+1)+' / '+slides.length;
+  document.querySelectorAll('.thumb').forEach((el,i)=>el.classList.toggle('active',i===currentSlide));
+}
+function changeSlide(direction){setSlide(currentSlide+direction)}
+
+function closeCheckout(){const m=document.getElementById('checkout');if(!m.classList.contains('open'))return;m.classList.add('closing');m.classList.remove('open');setTimeout(()=>m.classList.remove('closing'),220)}
+function openCheckout(){document.getElementById('checkout').classList.add('open')}
+function closeOutside(e){if(e.target.id==='checkout')closeCheckout()}
+function payment(method){document.querySelector('.methods').textContent=method+' selected — payment gateway ready to connect.';document.querySelectorAll('.pay').forEach(b=>b.style.outline='');event.currentTarget.style.outline='3px solid rgba(0,0,0,.22)'}
+function openUpiPayment(){window.open('https://payments.cashfree.com/forms/orzengoldea','_blank','noopener,noreferrer')}
+function openCardPayment(){window.open('https://whop.com/checkout/plan_gu8wUiNLnCxpU','_blank','noopener,noreferrer')}
+function openCryptoPayment(){window.open('https://pay.oxapay.com/13459737','_blank','noopener,noreferrer')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCheckout();else if(!document.getElementById('checkout').classList.contains('open')){if(e.key==='ArrowLeft')changeSlide(-1);if(e.key==='ArrowRight')changeSlide(1)}})
+</script>
+</body>
+</html>
