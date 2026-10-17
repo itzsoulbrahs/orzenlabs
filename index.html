@@ -250,6 +250,14 @@ body{font-family:'Manrope',Arial,Helvetica,sans-serif;color:#111;-webkit-font-sm
   .old{font-size:14px}
   .buy{font-size:12.5px}
 }
+
+/* Bottom social links */
+.footer-socials{display:flex;justify-content:center;align-items:center;gap:14px;width:min(646px,100%);margin:0 auto;padding:22px 0 30px;border-top:1px solid rgba(255,255,255,.18)}
+.footer-socials a{width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);border-radius:50%;color:#fff;background:rgba(255,255,255,.06);text-decoration:none;transition:transform .25s ease,background .25s ease,color .25s ease,border-color .25s ease}
+.footer-socials a svg{width:19px;height:19px;display:block;fill:currentColor}
+.footer-socials a:hover{background:#fff;color:#111;border-color:#fff;transform:translateY(-2px)}
+.footer-socials a:focus-visible{outline:2px solid #111;outline-offset:3px}
+
 </style>
 
 <style>
@@ -356,7 +364,18 @@ html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
     </section>
   </div>
 
+
+
 </div>
+
+  <div class="footer-socials" aria-label="Social media links">
+    <a href="https://discord.gg/XBQmAsCHM6" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.7 5.3A18.3 18.3 0 0 0 15.2 4l-.6 1.2a16.8 16.8 0 0 0-5.2 0L8.8 4a18.3 18.3 0 0 0-4.5 1.3C1.5 9.5.7 13.6 1.1 17.7a18.5 18.5 0 0 0 5.5 2.8l1.2-1.9-1.9-.9.5-.4c3.7 1.7 7.6 1.7 11.2 0l.5.4-1.9.9 1.2 1.9a18.5 18.5 0 0 0 5.5-2.8c.5-4.8-.8-8.9-3.2-12.4ZM8.8 15.1c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm6.4 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/orzen.labs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.2-3.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg>
+    </a>
+  </div>
 <script>
 (function(){
   var modal=document.getElementById('free-ea-modal');
