@@ -262,6 +262,37 @@ html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
 .buy{font-size:14px;font-weight:700;letter-spacing:.8px}
 @media(max-width:600px){.brand{font-size:14px;letter-spacing:1.8px}.section-title{font-size:14px}.product-name{font-size:15.5px}.price{font-size:26px}}
 </style>
+
+<style>
+/* Free EA card: restrained Orzen Labs styling */
+.free-product{display:flex;align-items:center;gap:18px;margin-top:20px;padding:16px;border:1px solid #222;border-left:4px solid #222;border-radius:20px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.08);scroll-margin-top:24px}
+.free-product .free-product-image{width:clamp(108px,30%,156px);aspect-ratio:1/1;height:auto;object-fit:contain;object-position:center;flex:0 0 auto;border-radius:12px;background:#111}
+.free-product .free-product-info{flex:1;min-width:0;padding:4px 2px;display:flex;flex-direction:column;justify-content:center}
+.free-product .free-product-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.free-product .product-name{margin:0;font-size:16px}
+.free-product .free-tag{flex:0 0 auto;padding:5px 10px;border-radius:999px;background:#ededed;color:#111;font-size:11px;font-weight:800;letter-spacing:.8px}
+.free-product .free-description{font-size:12px;line-height:1.5;color:#444;margin:0 0 7px}
+.free-product .free-meta{font-size:11px;line-height:1.45;color:#666;margin-bottom:12px}
+.free-product .free-meta span{padding:0 4px;color:#222}
+.free-product .buy{margin-top:0;padding:13px 12px;font-size:12px;letter-spacing:.55px;background:linear-gradient(180deg,#333,#111);box-shadow:0 7px 16px rgba(0,0,0,.14)}
+.free-product .buy:hover{background:linear-gradient(180deg,#222,#000)}
+.more-instructions{align-self:flex-start;border:0;background:transparent;color:#333;text-decoration:underline;text-underline-offset:3px;font:600 11px 'Manrope',Arial,sans-serif;padding:10px 0 0;cursor:pointer}
+.more-instructions:hover{color:#000}
+.free-ea-modal{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px}
+.free-ea-modal.is-open{display:flex}
+.free-ea-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(3px)}
+.free-ea-modal-panel{position:relative;z-index:1;width:min(500px,100%);max-height:min(86vh,760px);overflow:auto;background:#fff;border:1px solid #222;border-radius:20px;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.3);color:#171717}
+.free-ea-modal-close{position:absolute;right:15px;top:10px;border:0;background:transparent;color:#333;font-size:28px;line-height:1;cursor:pointer}
+.free-ea-modal-kicker{font-size:10px;font-weight:800;letter-spacing:1.7px;color:#666;margin-bottom:10px}
+.free-ea-modal-panel h2{font-size:24px;line-height:1.2;margin:0 28px 10px 0;letter-spacing:-.4px}
+.free-ea-modal-intro{font-size:14px;line-height:1.6;color:#444;margin:0 0 16px}
+.free-ea-details{padding-left:20px;margin:0 0 20px;color:#333;font-size:13px;line-height:1.65}
+.free-ea-details li{padding-left:3px;margin:0 0 9px}
+.free-ea-modal-panel .modal-download{margin:0;padding:14px;background:linear-gradient(180deg,#333,#111);font-size:12px}
+.free-ea-modal-note{font-size:11px;color:#666;line-height:1.5;text-align:center;margin:12px 0 0}
+@media(max-width:600px){.free-product{gap:12px;padding:10px;margin-top:16px;border-radius:16px;border-left-width:3px}.free-product .free-product-image{width:34%;max-width:125px;border-radius:9px}.free-product .free-product-info{padding:4px 2px}.free-product .free-product-heading{gap:6px;align-items:center}.free-product .product-name{font-size:13.5px}.free-product .free-tag{font-size:10px;padding:4px 7px}.free-product .free-description{font-size:11px;line-height:1.4;margin-bottom:6px}.free-product .free-meta{font-size:10px;margin-bottom:9px}.free-product .buy{font-size:10px;padding:11px 7px;letter-spacing:.2px}.more-instructions{font-size:10px;padding-top:8px}.free-ea-modal-panel{padding:24px 20px;border-radius:16px}.free-ea-modal-panel h2{font-size:21px}}
+</style>
+
 </head>
 <body>
 <div class="page">
@@ -293,7 +324,55 @@ html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
     </div>
   </div>
 
+
+  <div class="product free-product" id="us30-hft-ea" aria-labelledby="us30-hft-title" data-open-free-ea tabindex="0" role="button" aria-haspopup="dialog" aria-label="More instructions for US30 HFT EA">
+    <img class="free-product-image" src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1792236776/download_xbyd57.png" alt="US30 HFT EA">
+    <div class="free-product-info">
+      <div class="free-product-heading">
+        <div class="product-name" id="us30-hft-title">US30 HFT EA</div>
+      </div>
+      <div class="free-description">Join our Discord to get the EA download and setup instructions.</div>
+      <div class="free-meta">For MT4 &amp; MT5</div>
+      <a class="buy free-download" href="https://discord.gg/XBQmAsCHM6" target="_blank" rel="noopener">Download for Free</a>
+      <button class="more-instructions" type="button" data-open-free-ea>More instructions</button>
+    </div>
+  </div>
+
+  <div class="free-ea-modal" id="free-ea-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="free-ea-modal-title">
+    <div class="free-ea-modal-backdrop" data-close-free-ea></div>
+    <section class="free-ea-modal-panel" role="document">
+      <button class="free-ea-modal-close" type="button" aria-label="Close" data-close-free-ea>&times;</button>
+      <h2 id="free-ea-modal-title">US30 HFT EA</h2>
+      <p class="free-ea-modal-intro">Get the US30 HFT EA for free, with a setup guide included.</p>
+      <ul class="free-ea-details">
+        <li><strong>Platforms:</strong> MT4 &amp; MT5.</li>
+        <li><strong>Setup guide:</strong> Included for free.</li>
+        <li><strong>Get the EA:</strong> Join Discord, then visit <strong>#⛓️‍💥・free-hft-algo</strong> to download it.</li>
+      </ul>
+      <a class="buy free-download modal-download" href="https://discord.gg/XBQmAsCHM6" target="_blank" rel="noopener">Join Discord &amp; Get the EA</a>
+
+    </section>
+  </div>
+
 </div>
+<script>
+(function(){
+  var modal=document.getElementById('free-ea-modal');
+  if(!modal)return;
+  var lastFocus=null;
+  function openModal(){lastFocus=document.activeElement;modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';var close=modal.querySelector('.free-ea-modal-close');if(close)close.focus();}
+  function closeModal(){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus();}
+  document.querySelectorAll('[data-open-free-ea]').forEach(function(el){
+    el.addEventListener('click',function(e){
+      if(e.target.closest('a,button'))return;
+      openModal();
+    });
+    if(el.matches('.free-product'))el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal();}});
+  });
+  modal.querySelectorAll('[data-close-free-ea]').forEach(function(el){el.addEventListener('click',closeModal)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('is-open'))closeModal()});
+})();
+</script>
 <script>(function(){var d=document.documentElement,done=0;function go(){if(done)return;done=1;requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('ready')})})}var img=document.querySelector('.product-image');Promise.all([document.fonts?document.fonts.ready:0,img&&img.decode?img.decode().catch(function(){}):0]).then(go);setTimeout(go,2500)})()</script>
 </body>
 </html>
