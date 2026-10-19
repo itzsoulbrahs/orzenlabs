@@ -303,6 +303,32 @@ html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
 @media(max-width:600px){.free-product{gap:12px;padding:10px;margin-top:16px;border-radius:16px;border-left-width:3px}.free-product .free-product-image{width:34%;max-width:125px;border-radius:9px}.free-product .free-product-info{padding:4px 2px}.free-product .free-product-heading{gap:6px;align-items:center}.free-product .product-name{font-size:13.5px}.free-product .free-tag{font-size:10px;padding:4px 7px}.free-product .free-description{font-size:11px;line-height:1.4;margin-bottom:6px}.free-product .free-meta{font-size:10px;margin-bottom:9px}.free-product .buy{font-size:10px;padding:11px 7px;letter-spacing:.2px}.more-instructions{font-size:10px;padding-top:8px}.free-ea-modal-panel{padding:24px 20px;border-radius:16px}.free-ea-modal-panel h2{font-size:21px}}
 </style>
 
+<style>
+/* Mobile-only footer visibility fix; desktop styles remain unchanged. */
+@media (max-width:600px){
+  html,body{background:#fff}
+  .footer-socials{
+    display:flex;
+    width:100%;
+    max-width:none;
+    min-height:88px;
+    margin:0;
+    padding:24px 0 calc(28px + env(safe-area-inset-bottom));
+    background:linear-gradient(135deg,#202020 0%,#080808 55%,#1c1c1c 100%);
+    border-top:1px solid rgba(255,255,255,.18);
+    box-sizing:border-box;
+    position:relative;
+    z-index:2;
+  }
+  .footer-socials a{
+    flex:0 0 40px;
+    color:#fff;
+    background:rgba(255,255,255,.08);
+    border-color:rgba(255,255,255,.4);
+  }
+  .footer-socials a svg{fill:currentColor}
+}
+</style>
 </head>
 <body>
 <div class="page">
