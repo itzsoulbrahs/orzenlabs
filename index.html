@@ -258,6 +258,31 @@ body{font-family:'Manrope',Arial,Helvetica,sans-serif;color:#111;-webkit-font-sm
 .footer-socials a:hover{background:#fff;color:#111;border-color:#fff;transform:translateY(-2px)}
 .footer-socials a:focus-visible{outline:2px solid #111;outline-offset:3px}
 
+
+/* First-visit HFT offer popup */
+.hft-offer-modal{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease}
+.hft-offer-modal.is-open{opacity:1;visibility:visible;pointer-events:auto}
+.hft-offer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(4px)}
+.hft-offer-card{position:relative;z-index:1;width:min(360px,100%);overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:#fff;color:#111;box-shadow:0 28px 90px rgba(0,0,0,.4);transform:translateY(10px) scale(.98);transition:transform .25s ease}
+.hft-offer-modal.is-open .hft-offer-card{transform:translateY(0) scale(1)}
+.hft-offer-close{position:absolute;z-index:2;top:10px;right:10px;width:32px;height:32px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:rgba(0,0,0,.58);color:#fff;font:400 23px/1 Arial,sans-serif;cursor:pointer}
+.hft-offer-image{
+  display:block;width:100%;height:170px;object-fit:contain;object-position:center;
+  padding:0 24px;
+  background:radial-gradient(ellipse at 50% 55%, #252525 0%, #1b1b1b 58%, #111 100%);
+}
+.hft-offer-content{padding:22px 22px 23px;text-align:center}
+.hft-offer-label{display:inline-block;margin-bottom:10px;padding:5px 9px;border-radius:999px;background:#f0f0f0;color:#333;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+.hft-offer-content h2{margin:0 0 8px;font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-.7px}
+.hft-offer-content p{margin:0 auto 18px;max-width:275px;color:#555;font-size:13px;line-height:1.55}
+.hft-offer-join{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px 16px;border-radius:10px;background:#242424;color:#fff;text-decoration:none;font-size:13px;font-weight:800;letter-spacing:.35px;transition:background .2s ease,transform .2s ease}
+.hft-offer-join:hover{background:#050505;transform:translateY(-1px)}
+.hft-offer-join svg{width:19px;height:19px;fill:currentColor}
+.hft-offer-footnote{margin-top:11px!important;margin-bottom:0!important;font-size:10px!important;color:#777!important}
+@media(max-width:600px){.hft-offer-card{width:min(330px,100%)}.hft-offer-image{height:150px;padding:0 18px}.hft-offer-content{padding:18px 18px 20px}.hft-offer-content h2{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.hft-offer-modal,.hft-offer-card,.hft-offer-join{transition:none}}
+
+
 </style>
 
 <style>
@@ -331,6 +356,24 @@ html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
 </style>
 </head>
 <body>
+
+<div class="hft-offer-modal" id="hft-offer-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="hft-offer-title">
+  <div class="hft-offer-backdrop" data-close-hft-offer></div>
+  <section class="hft-offer-card" role="document">
+    <button class="hft-offer-close" type="button" aria-label="Close offer" data-close-hft-offer>&times;</button>
+    <img class="hft-offer-image" src="https://res.cloudinary.com/ddhmtzdhi/image/upload/v1792236776/download_xbyd57.png" alt="US30 HFT EA">
+    <div class="hft-offer-content">
+      <span class="hft-offer-label">Free community access</span>
+      <h2 id="hft-offer-title">Get Free HFT Bot</h2>
+      <p>Join our Discord to get the free HFT EA.</p>
+      <a class="hft-offer-join" href="https://discord.gg/XBQmAsCHM6" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.7 5.3A18.3 18.3 0 0 0 15.2 4l-.6 1.2a16.8 16.8 0 0 0-5.2 0L8.8 4a18.3 18.3 0 0 0-4.5 1.3C1.5 9.5.7 13.6 1.1 17.7a18.5 18.5 0 0 0 5.5 2.8l1.2-1.9-1.9-.9.5-.4c3.7 1.7 7.6 1.7 11.2 0l.5.4-1.9.9 1.2 1.9a18.5 18.5 0 0 0 5.5-2.8c.5-4.8-.8-8.9-3.2-12.4ZM8.8 15.1c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm6.4 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/></svg>
+        Join Discord
+      </a>
+    </div>
+  </section>
+</div>
+
 <div class="page">
 
   <div class="banner">
@@ -420,5 +463,42 @@ html,body{font-family:'Manrope',Arial,Helvetica,sans-serif}
 })();
 </script>
 <script>(function(){var d=document.documentElement,done=0;function go(){if(done)return;done=1;requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('ready')})})}var img=document.querySelector('.product-image');Promise.all([document.fonts?document.fonts.ready:0,img&&img.decode?img.decode().catch(function(){}):0]).then(go);setTimeout(go,2500)})()</script>
+
+<script>
+(function(){
+  var modal=document.getElementById('hft-offer-modal');
+  if(!modal)return;
+  var lastFocus=null;
+  var storageKey='orzen_hft_popup_seen_v1';
+  function hasSeenOffer(){
+    try{return window.sessionStorage.getItem(storageKey)==='1';}
+    catch(e){return false;}
+  }
+  function openOffer(){
+    if(hasSeenOffer())return;
+    try{window.sessionStorage.setItem(storageKey,'1');}catch(e){}
+    lastFocus=document.activeElement;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    var close=modal.querySelector('.hft-offer-close');
+    if(close)close.focus();
+  }
+  function closeOffer(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+  modal.querySelectorAll('[data-close-hft-offer]').forEach(function(el){
+    el.addEventListener('click',closeOffer);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&modal.classList.contains('is-open'))closeOffer();
+  });
+  if(!hasSeenOffer())window.setTimeout(openOffer,650);
+})();
+</script>
+
 </body>
 </html>
